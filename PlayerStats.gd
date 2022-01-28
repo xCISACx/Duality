@@ -14,6 +14,9 @@ signal max_health_changed(value)
 signal stamina_changed(value)
 signal max_stamina_changed(value)
 
+signal speed_changed(value)
+signal max_speed_changed(value)
+
 func _ready():
 	self.health = max_health
 	self.stamina = max_stamina
@@ -38,3 +41,12 @@ func set_max_stamina(value):
 func set_stamina(value):
 	stamina = value
 	emit_signal("stamina_changed", stamina)
+
+func set_max_speed(value):
+	max_speed = value
+	self.speed = min(speed, max_speed)
+	emit_signal("max_stamina_changed", max_speed)
+	
+func set_speed(value):
+	speed = value
+	emit_signal("speed_changed", speed)
