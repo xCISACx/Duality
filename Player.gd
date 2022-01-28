@@ -21,12 +21,11 @@ func _physics_process(delta):
 			move_state(delta)
 		ROLL:
 			roll_state()
-			
-	print(String(PlayerStats.max_health) + " " + String(PlayerStats.max_stamina) + " " + String(PlayerStats.max_speed))
 		
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
 	pass # Replace with function body.
 	
 func move_state(delta):
@@ -77,3 +76,11 @@ func roll_animation_finished():
 	$HurtBox/CollisionShape2D.disabled = false
 	velocity = velocity * 0.8
 	state = MOVE
+	
+func set_max_speed(value):
+	MAX_SPEED = value * 20
+	print(MAX_SPEED)
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass

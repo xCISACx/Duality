@@ -62,3 +62,4 @@ func _ready():
 	PlayerStats.connect("max_stamina_changed", self, "set_max_stamina")
 	PlayerStats.connect("speed_changed", self, "set_speed")
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
+	

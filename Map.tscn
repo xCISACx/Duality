@@ -98,12 +98,32 @@ position = Vector2( -20.3619, -43.9102 )
 [node name="Pickup" parent="." instance=ExtResource( 8 )]
 position = Vector2( -47.1545, -113.588 )
 
+[node name="Pickup6" parent="." instance=ExtResource( 8 )]
+position = Vector2( -89, -133 )
+
+[node name="Pickup7" parent="." instance=ExtResource( 8 )]
+position = Vector2( -88, -99 )
+
+[node name="Pickup8" parent="." instance=ExtResource( 8 )]
+position = Vector2( -88, -67 )
+
 [node name="Pickup2" parent="." instance=ExtResource( 8 )]
 position = Vector2( 123.007, -133.633 )
 type = 1
 
 [node name="Pickup3" parent="." instance=ExtResource( 8 )]
 position = Vector2( -126.445, -132.742 )
+scale = Vector2( 0.993489, 1.02205 )
+type = 2
+
+[node name="Pickup4" parent="." instance=ExtResource( 8 )]
+position = Vector2( -128, -99 )
+scale = Vector2( 0.993489, 1.02205 )
+type = 2
+
+[node name="Pickup5" parent="." instance=ExtResource( 8 )]
+position = Vector2( -128, -69 )
+scale = Vector2( 0.993489, 1.02205 )
 type = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

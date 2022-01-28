@@ -45,7 +45,7 @@ func set_stamina(value):
 func set_max_speed(value):
 	max_speed = value
 	self.speed = min(speed, max_speed)
-	emit_signal("max_stamina_changed", max_speed)
+	emit_signal("max_speed_changed", max_speed)
 	
 func set_speed(value):
 	speed = value
