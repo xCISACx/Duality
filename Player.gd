@@ -75,8 +75,3 @@ func roll_animation_finished():
 	$HurtBox/CollisionShape2D.disabled = false
 	velocity = velocity * 0.8
 	state = MOVE
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

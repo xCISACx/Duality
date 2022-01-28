@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://barrel.png" type="Texture" id=2]
+[ext_resource path="res://WanderController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -11,29 +13,45 @@ height = 4.0
 height = 4.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 30.0
+radius = 46.0
 
 [node name="Enemy" type="KinematicBody2D"]
+collision_layer = 16
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0, 16 )
+position = Vector2( 0, 8 )
 rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 0, 1 )
 shape = SubResource( 2 )
 
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2( 0, 1 )
+shape = SubResource( 2 )
+
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
 shape = SubResource( 3 )
+
+[node name="WanderController" parent="." instance=ExtResource( 3 )]
+
+[connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
+[connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]

@@ -12,6 +12,7 @@ radius = 7.0
 height = 10.0
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
+collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
