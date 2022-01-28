@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Enemy.gd" type="Script" id=1]
+[ext_resource path="res://EnemyBarrel.gd" type="Script" id=1]
 [ext_resource path="res://barrel.png" type="Texture" id=2]
 [ext_resource path="res://WanderController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
@@ -52,6 +52,8 @@ script = ExtResource( 4 )
 shape = SubResource( 3 )
 
 [node name="WanderController" parent="." instance=ExtResource( 3 )]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
 
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]

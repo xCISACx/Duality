@@ -13,6 +13,8 @@ var knockback = Vector2.ZERO
 onready var sprite = $Sprite
 onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
+onready var animationTree = $AnimationTree
+onready var animationState = animationTree.get("parameters/playback")
 
 var state = IDLE
 
@@ -28,6 +30,7 @@ func _ready():
 func _physics_process(delta):		
 	match state:
 		IDLE:
+			animationState.travel("idle")
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			seek_player()
 			
@@ -35,6 +38,7 @@ func _physics_process(delta):
 				update_wander()
 				
 		WANDER:
+			animationState.travel("move")
 			seek_player()
 			if wanderController.get_time_left() == 0:
 				update_wander()
@@ -45,6 +49,7 @@ func _physics_process(delta):
 				update_wander()
 				
 		CHASE:
+			animationState.travel("move")
 			var player = playerDetectionZone.player
 			if player != null:
 				accelerate_towards_point(player.global_position, delta)

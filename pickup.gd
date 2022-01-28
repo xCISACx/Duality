@@ -25,15 +25,16 @@ func _on_Area2D_body_entered(body):
 
 func PickupHealth():
 	print("Picked Up Health")
-	PlayerStats.health += 10
-	PlayerStats.speed -= 10
+	PlayerStats.max_health += 1
+	PlayerStats.max_speed -= 1
 
 func PickupStamina():
 	print("Picked Up Stamina")
-	PlayerStats.stamina += 10
-	PlayerStats.health -= 10
+	PlayerStats.max_stamina += 1
+	PlayerStats.set_max_health(PlayerStats.max_health - 1)
+	#PlayerStats.max_health -= 1
 
 func PickupSpeed():
 	print("Picked Up Speed")
-	PlayerStats.speed += 10
-	PlayerStats.stamina -= 10
+	PlayerStats.max_speed += 1
+	PlayerStats.max_stamina -= 1

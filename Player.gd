@@ -21,6 +21,8 @@ func _physics_process(delta):
 			move_state(delta)
 		ROLL:
 			roll_state()
+			
+	print(String(PlayerStats.max_health) + " " + String(PlayerStats.max_stamina) + " " + String(PlayerStats.max_speed))
 		
 
 # Called when the node enters the scene tree for the first time.
