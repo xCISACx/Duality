@@ -19,6 +19,8 @@ func _physics_process(delta):
 	match state:
 		MOVE:
 			move_state(delta)
+		ROLL:
+			roll_state()
 		
 
 # Called when the node enters the scene tree for the first time.
@@ -49,8 +51,30 @@ func move_state(delta):
 	
 	move()
 	
+	if Input.is_action_just_pressed("roll"):
+#		if stats.stamina >= 1:
+#			stats.stamina -= 1
+#			if stats.stamina < 1:
+#				stamina_timeout_timer.start()
+#				stamina_timer.stop()
+#			else:
+#				stamina_timer.start()
+			state = ROLL
+#		else:
+#			print("Can't roll!")
+	
 func move():
 	velocity = move_and_slide(velocity)
+	
+func roll_state():
+	velocity = roll_vector * ROLL_SPEED
+	#animationState.travel("Roll")
+	move()
+	
+func roll_animation_finished():
+	$HurtBox/CollisionShape2D.disabled = false
+	velocity = velocity * 0.8
+	state = MOVE
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
