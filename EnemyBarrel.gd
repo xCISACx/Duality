@@ -13,10 +13,11 @@ var debug_vector1 = Vector2.ZERO
 var debug_vector2 = Vector2.ZERO
 var apex = false
 var can_move = true
-var player = null
+var player
+onready var last_position = global_position
 
 onready var sprite = $Sprite
-onready var wanderController = $WanderController
+#onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
@@ -33,19 +34,26 @@ func _physics_process(delta):
 		IDLE:
 			animationState.travel("idle")
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+			last_position = global_position
 			seek_player()
-				
-		CHASE:
-			animationState.travel("attack")
 			
+		CHASE:
+			var player = playerDetectionZone.player
+			animationState.travel("attack")
+			print("chase")
 			var space_state = get_world_2d().direct_space_state
 			if player:
 				var result = space_state.intersect_ray(global_position, player.global_position, [self])
-			
+				#if result.is_in_group("")
+					
 			if player != null and can_move:
 				accelerate_towards_point(player.global_position, delta)
+				print("go to player")
 			else:
-				state = IDLE
+				accelerate_towards_point(last_position, delta)
+				if global_position.distance_to(last_position) <= 5:
+					state = IDLE
+				
 				
 	velocity = move_and_slide(velocity)
 			
@@ -74,11 +82,4 @@ func _on_Timer_timeout():
 	
 func _process(delta):
 	#print($Timer.time_left)
-	
-	if player:
-		debug_vector1 = Vector2(position)
-		debug_vector2 = Vector2(player.position)
-		$Line2D.set_point_position(0, debug_vector1)
-		$Line2D.set_point_position(1, debug_vector2)
-		print($Line2D.points)
-		print("a")
+	pass
