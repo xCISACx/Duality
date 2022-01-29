@@ -1,7 +1,7 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://EnemyMushroom.gd" type="Script" id=1]
-[ext_resource path="res://mushroomman.png" type="Texture" id=2]
+[ext_resource path="res://mushroomman_new.png" type="Texture" id=2]
 [ext_resource path="res://WanderController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=5]
@@ -20,6 +20,40 @@ radius = 46.0
 radius = 7.0
 height = 4.0
 
+[sub_resource type="Animation" id=5]
+resource_name = "MushroomAngryWalk"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "MushroomAttack"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
 [sub_resource type="Animation" id=4]
 resource_name = "MushroomIdle"
 length = 0.8
@@ -35,23 +69,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 4, 5, 6, 7 ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "MushroomWalk"
-length = 0.8
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3 ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -98,7 +115,7 @@ script = ExtResource( 1 )
 position = Vector2( 0, -9 )
 texture = ExtResource( 2 )
 hframes = 4
-vframes = 2
+vframes = 4
 frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -136,14 +153,14 @@ shape = SubResource( 13 )
 [node name="WanderController" parent="." instance=ExtResource( 3 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/MushroomAngryWalk = SubResource( 5 )
+anims/MushroomAttack = SubResource( 14 )
 anims/MushroomIdle = SubResource( 4 )
-anims/MushroomWalk = SubResource( 5 )
 anims/RESET = SubResource( 6 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 12 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
