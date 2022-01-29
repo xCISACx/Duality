@@ -14,6 +14,7 @@ var debug_vector2 = Vector2.ZERO
 var apex = false
 var can_move = true
 var player
+var hit_position = Vector2.ZERO
 onready var last_position = global_position
 
 onready var sprite = $Sprite
@@ -43,8 +44,10 @@ func _physics_process(delta):
 			print("chase")
 			var space_state = get_world_2d().direct_space_state
 			if player:
-				var result = space_state.intersect_ray(global_position, player.global_position, [self])
-				#if result.is_in_group("")
+				var result = space_state.intersect_ray(position, player.position, [self])
+				if result:
+					hit_position = result.position
+					$RayPivot.rotation = (player.position - position).angle()
 					
 			if player != null and can_move:
 				accelerate_towards_point(player.global_position, delta)
@@ -82,4 +85,8 @@ func _on_Timer_timeout():
 	
 func _process(delta):
 	#print($Timer.time_left)
+	_draw()
 	pass
+	
+func _draw():
+	draw_line(Vector2(), (hit_position - position).rotated($RayPivot.rotation), Color.red)

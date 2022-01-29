@@ -44,7 +44,7 @@ func move_state(delta):
 		animation_tree.set("parameters/Idle/blend_position", input_vector)
 		animation_tree.set("parameters/Walk/blend_position", input_vector)
 		animation_tree.set("parameters/Attack/blend_position", input_vector)
-		#animationTree.set("parameters/Roll/blend_position", input_vector)
+		animation_tree.set("parameters/Roll/blend_position", input_vector)
 		
 		animation_state.travel("Walk")
 		
@@ -72,7 +72,7 @@ func move():
 	
 func roll_state():
 	velocity = roll_vector * ROLL_SPEED
-	#animationState.travel("Roll")
+	animation_state.travel("Roll")
 	move()
 	
 func roll_animation_finished():

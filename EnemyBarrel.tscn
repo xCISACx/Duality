@@ -208,9 +208,7 @@ wait_time = 0.5
 one_shot = true
 autostart = true
 
-[node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 0, 0, 0 )
-width = 3.0
+[node name="RayPivot" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]

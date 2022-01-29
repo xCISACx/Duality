@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://EnemyMushroom.gd" type="Script" id=1]
 [ext_resource path="res://mushroomman.png" type="Texture" id=2]
 [ext_resource path="res://WanderController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -125,7 +126,6 @@ collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
-visible = false
 shape = SubResource( 3 )
 
 [node name="WanderController" parent="." instance=ExtResource( 3 )]
@@ -140,6 +140,13 @@ tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 12 )
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Pivot"]
+position = Vector2( 0, 15 )
+scale = Vector2( 0.03125, 0.171875 )
+texture = ExtResource( 5 )
 
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]

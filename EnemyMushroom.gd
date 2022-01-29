@@ -11,6 +11,8 @@ var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 
 onready var last_position = global_position
+var hit_position = Vector2.ZERO
+var player = null
 
 onready var sprite = $Sprite
 onready var wanderController = $WanderController
@@ -53,15 +55,17 @@ func _physics_process(delta):
 				
 		CHASE:
 			animationState.travel("move")
-			var player = playerDetectionZone.player
-			if player != null:
-				accelerate_towards_point(player.global_position, delta)
+			player = playerDetectionZone.player
+			if player:
+				#accelerate_towards_point(player.global_position, delta)
+				aim()
 			else:
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
 					state = IDLE
 				
 	velocity = move_and_slide(velocity)
+	update()
 			
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
@@ -71,6 +75,7 @@ func accelerate_towards_point(point, delta):
 func seek_player():
 	if playerDetectionZone.can_see_player():
 		state = CHASE
+		print("chase")
 		
 func update_wander():
 	state = pick_random_state([IDLE, WANDER])
@@ -79,3 +84,17 @@ func update_wander():
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front() #pick the first random result
+	
+func aim():
+	var space_state = get_world_2d().direct_space_state
+	var result = space_state.intersect_ray(position, player.position, [self])
+	$Pivot.rotation = (player.position - position).angle()
+	if result:
+		print(result.collider.name)
+		hit_position = result.position
+		if result.collider.name == "Player":
+			print("hit")
+			
+func _draw():
+	draw_line(Vector2(), (hit_position - position).rotated($Pivot.rotation), Color.red, 5)
+	pass
