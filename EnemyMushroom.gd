@@ -24,6 +24,9 @@ onready var reset_timer = $ResetTimer
 onready var shoot_timer = $ShootingTimer
 onready var animationState = animationTree.get("parameters/playback")
 const BulletScene = preload("res://BulletScene.tscn")
+onready var enemystat = $EnemyStat
+
+signal start_invincibility
 
 var state = IDLE
 
@@ -36,6 +39,7 @@ enum {
 
 func _ready():
 	state = pick_random_state([IDLE, WANDER])
+	enemystat.connect("no_health", self, "death")
 	
 func _physics_process(delta):		
 	match state:
@@ -153,3 +157,11 @@ func _on_reset_timer_timeout():
 
 func _on_ShootingTimer_timeout():
 	can_shoot = true
+	
+func death():
+	queue_free()
+	
+func _on_HurtBox_area_entered(area):
+	enemystat.set_health(enemystat.health - area.damage)
+	emit_signal("start_invincibility")
+	print(enemystat.health)
