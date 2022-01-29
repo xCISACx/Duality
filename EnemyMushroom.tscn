@@ -121,7 +121,6 @@ collision_mask = 2
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
-visible = false
 shape = SubResource( 3 )
 
 [node name="HitBox" parent="." instance=ExtResource( 5 )]
@@ -129,7 +128,6 @@ collision_layer = 16
 collision_mask = 5
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-visible = false
 position = Vector2( 0, 4 )
 shape = SubResource( 13 )
 

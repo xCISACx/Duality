@@ -14,8 +14,7 @@ onready var hurtbox = $"HurtBox/CollisionShape2D"
 enum {
 	MOVE,
 	ROLL,
-	ATTACK,
-	DEATH
+	ATTACK
 }
 
 var state = MOVE
@@ -30,8 +29,6 @@ func _physics_process(delta):
 			roll_state()
 		ATTACK:
 			attack_state()
-		DEATH:
-			death_state()
 		
 
 # Called when the node enters the scene tree for the first time.
@@ -39,7 +36,6 @@ func _ready():
 	randomize()
 	animation_tree.active = true
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
-	PlayerStats.connect("no_health", self, "death_state")
 	collsword.disabled = true
 	hurtbox.disabled = false
 	pass # Replace with function body.
@@ -58,7 +54,6 @@ func move_state(delta):
 		animation_tree.set("parameters/Walk/blend_position", input_vector)
 		animation_tree.set("parameters/Attack/blend_position", input_vector)
 		animation_tree.set("parameters/Roll/blend_position", input_vector)
-		animation_tree.set("parameters/Death/blend_position", input_vector)
 		
 		animation_state.travel("Walk")
 		
@@ -96,11 +91,6 @@ func attack_state():
 	#velocity = Vector2.ZERO
 	animation_state.travel("Attack")
 	move()
-
-func death_state():
-	velocity = Vector2.ZERO
-	state = DEATH
-	animation_state.travel("Death")
 	
 func attack_animation_finished():
 	state = MOVE
