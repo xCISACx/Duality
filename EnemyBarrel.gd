@@ -22,12 +22,14 @@ onready var sprite = $Sprite
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
+onready var hitbox = $HitBox2/CollisionShape2D
 
 var state = IDLE
 
 enum {
 	IDLE,
-	CHASE
+	CHASE,
+	ATTACK
 }
 
 func _physics_process(delta):		
@@ -41,7 +43,7 @@ func _physics_process(delta):
 		CHASE:
 			var player = playerDetectionZone.player
 			animationState.travel("attack")
-			print("chase")
+			#print("chase")
 			var space_state = get_world_2d().direct_space_state
 			if player:
 				var result = space_state.intersect_ray(position, player.position, [self])
@@ -51,12 +53,11 @@ func _physics_process(delta):
 					
 			if player != null and can_move:
 				accelerate_towards_point(player.global_position, delta)
-				print("go to player")
+				#print("go to player")
 			else:
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
-					state = IDLE
-				
+					state = IDLE			
 				
 	velocity = move_and_slide(velocity)
 			
