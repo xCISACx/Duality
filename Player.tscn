@@ -595,7 +595,7 @@ texture = ExtResource( 2 )
 offset = Vector2( -1, 0 )
 hframes = 5
 vframes = 12
-frame = 15
+frame = 18
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -646,5 +646,7 @@ collision_mask = 8
 [node name="CollisionShape2D" parent="HitBoxPivot/SwordHitBox" index="0"]
 position = Vector2( 4, 31 )
 rotation = 1.5708
+
+[node name="test" type="Node2D" parent="."]
 
 [editable path="HitBoxPivot/SwordHitBox"]
