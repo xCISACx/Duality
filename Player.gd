@@ -10,6 +10,10 @@ onready var animation_state = animation_tree.get("parameters/playback")
 onready var swordHitbox = $"HitBoxPivot/SwordHitBox"
 onready var collsword = $"HitBoxPivot/SwordHitBox/CollisionShape2D"
 onready var hurtbox = $"HurtBox/CollisionShape2D"
+onready var stamina_timer = $StaminaTimer
+onready var stamina_timeout_timer = $StaminaTimeout
+
+var stats = PlayerStats
 
 enum {
 	MOVE,
@@ -70,16 +74,16 @@ func move_state(delta):
 	move()
 	
 	if Input.is_action_just_pressed("roll"):
-#		if stats.stamina >= 1:
-#			stats.stamina -= 1
-#			if stats.stamina < 1:
-#				stamina_timeout_timer.start()
-#				stamina_timer.stop()
-#			else:
-#				stamina_timer.start()
+		if stats.stamina >= 1:
+			stats.set_stamina(stats.stamina - 1)
+			if stats.stamina < 1:
+				stamina_timeout_timer.start()
+				stamina_timer.stop()
+			else:
+				stamina_timer.start()
 			state = ROLL
-#		else:
-#			print("Can't roll!")
+		else:
+			print("Can't roll!")
 
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
@@ -117,4 +121,11 @@ func set_max_speed(value):
 func _on_HurtBox_area_entered(area):
 	PlayerStats.set_health(PlayerStats.health - area.damage)
 	print(PlayerStats.health)
+	
+func _on_StaminaTimer_timeout():
+	if (stats.stamina < stats.max_stamina):
+		stats.set_stamina(stats.stamina + 1)
+
+func _on_StaminaTimeout_timeout():
+	stamina_timer.start()
 	
