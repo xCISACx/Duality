@@ -5,6 +5,9 @@ export var MAX_SPEED = 80
 export var ROLL_SPEED = 120
 export var FRICTION = 500
 
+onready var animation_tree = $AnimationTree
+onready var animation_state = animation_tree.get("parameters/playback")
+
 enum {
 	MOVE,
 	ROLL,
@@ -38,16 +41,16 @@ func move_state(delta):
 		roll_vector = input_vector
 		#swordHitbox.knockback_vector = input_vector
 		
-		#animationTree.set("parameters/Idle/blend_position", input_vector)
-		#animationTree.set("parameters/Run/blend_position", input_vector)
-		#animationTree.set("parameters/Attack/blend_position", input_vector)
+		animation_tree.set("parameters/Idle/blend_position", input_vector)
+		animation_tree.set("parameters/Walk/blend_position", input_vector)
+		animation_tree.set("parameters/Attack/blend_position", input_vector)
 		#animationTree.set("parameters/Roll/blend_position", input_vector)
 		
-		#animationState.travel("Run")
+		animation_state.travel("Walk")
 		
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
-		#animationState.travel("Idle")
+		animation_state.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	
 	move()
