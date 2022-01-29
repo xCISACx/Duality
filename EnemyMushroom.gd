@@ -18,6 +18,7 @@ onready var sprite = $Sprite
 onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
+onready var raycast_node = $RayCast2D
 onready var animationState = animationTree.get("parameters/playback")
 
 var state = IDLE
@@ -57,8 +58,11 @@ func _physics_process(delta):
 			animationState.travel("move")
 			player = playerDetectionZone.player
 			if player:
-				#accelerate_towards_point(player.global_position, delta)
-				aim()
+				accelerate_towards_point(player.global_position, delta)
+				var pps = global_position.direction_to(player.global_position)
+				raycast_node.set_cast_to(pps * 10000)
+				if raycast_node.get_collider():
+					print(raycast_node.get_collider())
 			else:
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
@@ -84,17 +88,4 @@ func update_wander():
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front() #pick the first random result
-	
-func aim():
-	var space_state = get_world_2d().direct_space_state
-	var result = space_state.intersect_ray(position, player.position, [self])
-	$Pivot.rotation = (player.position - position).angle()
-	if result:
-		print(result.collider.name)
-		hit_position = result.position
-		if result.collider.name == "Player":
-			print("hit")
-			
-func _draw():
-	draw_line(Vector2(), (hit_position - position).rotated($Pivot.rotation), Color.red, 5)
-	pass
+
