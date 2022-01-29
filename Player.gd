@@ -104,3 +104,7 @@ func set_max_speed(value):
 	MAX_SPEED = value * 20
 	print(MAX_SPEED)
 
+func _on_HurtBox_area_entered(area):
+	PlayerStats.set_health(PlayerStats.health - area.damage)
+	print(PlayerStats.health)
+	

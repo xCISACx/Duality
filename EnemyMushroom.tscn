@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://EnemyMushroom.gd" type="Script" id=1]
 [ext_resource path="res://mushroomman.png" type="Texture" id=2]
 [ext_resource path="res://WanderController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
+[ext_resource path="res://HitBox.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -14,6 +15,10 @@ height = 4.0
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 46.0
+
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 7.0
+height = 4.0
 
 [sub_resource type="Animation" id=4]
 resource_name = "MushroomIdle"
@@ -110,15 +115,6 @@ visible = false
 position = Vector2( 0, 1 )
 shape = SubResource( 2 )
 
-[node name="HitBox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-visible = false
-position = Vector2( 0, 1 )
-shape = SubResource( 2 )
-
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
@@ -126,6 +122,14 @@ script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
 shape = SubResource( 3 )
+
+[node name="HitBox" parent="." instance=ExtResource( 5 )]
+collision_layer = 16
+collision_mask = 5
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2( 0, 4 )
+shape = SubResource( 13 )
 
 [node name="WanderController" parent="." instance=ExtResource( 3 )]
 
@@ -142,6 +146,18 @@ parameters/playback = SubResource( 12 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
+collision_mask = 3
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="ShootingTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="ShootingTimer" to="." method="_on_ShootingTimer_timeout"]
+
+[editable path="HitBox"]

@@ -649,4 +649,6 @@ rotation = 1.5708
 
 [node name="test" type="Node2D" parent="."]
 
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+
 [editable path="HitBoxPivot/SwordHitBox"]

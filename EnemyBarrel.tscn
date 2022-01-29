@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://EnemyBarrel.gd" type="Script" id=1]
 [ext_resource path="res://barrel-sheet.png" type="Texture" id=2]
+[ext_resource path="res://HitBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -9,6 +10,9 @@ radius = 4.0
 height = 4.0
 
 [sub_resource type="CapsuleShape2D" id=2]
+height = 4.0
+
+[sub_resource type="CapsuleShape2D" id=19]
 height = 4.0
 
 [sub_resource type="CircleShape2D" id=3]
@@ -150,6 +154,9 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 
+[sub_resource type="CircleShape2D" id=20]
+radius = 19.105
+
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 16
 script = ExtResource( 1 )
@@ -174,16 +181,14 @@ collision_mask = 0
 position = Vector2( 0, 1 )
 shape = SubResource( 2 )
 
-[node name="HitBox" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="HitBox" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 1 )
-shape = SubResource( 2 )
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource( 19 )
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 4 )
@@ -210,6 +215,15 @@ autostart = true
 
 [node name="RayPivot" type="Node2D" parent="."]
 
+[node name="HitBox2" parent="." instance=ExtResource( 3 )]
+
+[node name="CollisionShape2D" parent="HitBox2" index="0"]
+shape = SubResource( 20 )
+disabled = true
+
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="HitBox"]
+[editable path="HitBox2"]

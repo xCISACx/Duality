@@ -85,8 +85,7 @@ func _on_Timer_timeout():
 	
 func _process(delta):
 	#print($Timer.time_left)
-	_draw()
 	pass
 	
-func _draw():
-	draw_line(Vector2(), (hit_position - position).rotated($RayPivot.rotation), Color.red)
+
+

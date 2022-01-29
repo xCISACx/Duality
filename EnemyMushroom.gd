@@ -13,20 +13,25 @@ var knockback = Vector2.ZERO
 onready var last_position = global_position
 var hit_position = Vector2.ZERO
 var player = null
+var can_shoot = true
 
 onready var sprite = $Sprite
 onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
 onready var raycast_node = $RayCast2D
+onready var reset_timer = $Timer
+onready var shoot_timer = $ShootingTimer
 onready var animationState = animationTree.get("parameters/playback")
+const BulletScene = preload("res://BulletScene.tscn")
 
 var state = IDLE
 
 enum {
 	IDLE,
 	WANDER,
-	CHASE
+	CHASE,
+	ATTACK
 }
 
 func _ready():
@@ -35,6 +40,7 @@ func _ready():
 func _physics_process(delta):		
 	match state:
 		IDLE:
+			shoot_timer.stop()
 			animationState.travel("idle")
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			seek_player()
@@ -55,21 +61,60 @@ func _physics_process(delta):
 				last_position = global_position
 				
 		CHASE:
+			shoot_timer.stop()
 			animationState.travel("move")
-			player = playerDetectionZone.player
+			
 			if player:
 				accelerate_towards_point(player.global_position, delta)
-				var pps = global_position.direction_to(player.global_position)
-				raycast_node.set_cast_to(pps * 10000)
-				if raycast_node.get_collider():
-					print(raycast_node.get_collider())
+				
+				var direction_to_player = global_position.direction_to(player.global_position)
+				raycast_node.set_cast_to(direction_to_player * 100)
+				var hit_object = raycast_node.get_collider()
+				
+				if hit_object:
+					#print("hit something")
+					if hit_object.is_in_group("Player"):
+						reset_timer.start()
+						#print("hit player")
+						reset_timer.stop()
+						state = ATTACK
+					elif hit_object.is_in_group("Walls"):
+						#print("hit wall")
+						_on_Timer_timeout()
+						
 			else:
+				seek_player()
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
 					state = IDLE
+					
+					
+		ATTACK:
+			if shoot_timer.is_stopped():
+				can_shoot = true
+			velocity = Vector2.ZERO
+			animationState.travel("attack")
+			if global_position.distance_to(player.position) >= 85:
+				state = CHASE
+			elif player and can_shoot:
+				var direction_to_player = global_position.direction_to(player.global_position)
+				shoot_towards(direction_to_player)
+				
 				
 	velocity = move_and_slide(velocity)
-	update()
+			
+			
+			
+func shoot_towards(direction):
+	var bullet = BulletScene.instance()
+	get_tree().get_root().add_child(bullet)
+	bullet.position = global_position
+	bullet.direction = direction
+	can_shoot = false
+	shoot_timer.start()
+	
+			
+			
 			
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
@@ -78,8 +123,9 @@ func accelerate_towards_point(point, delta):
 
 func seek_player():
 	if playerDetectionZone.can_see_player():
+		player = playerDetectionZone.player
 		state = CHASE
-		print("chase")
+		#print("chase")
 		
 func update_wander():
 	state = pick_random_state([IDLE, WANDER])
@@ -89,3 +135,11 @@ func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front() #pick the first random result
 
+
+
+func _on_Timer_timeout():
+	player = null
+
+
+func _on_ShootingTimer_timeout():
+	can_shoot = true

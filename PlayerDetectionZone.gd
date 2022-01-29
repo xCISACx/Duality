@@ -1,7 +1,7 @@
 extends Area2D
 
 var player = null
-var chase_distance = 80
+var chase_distance = 160
 	
 func can_see_player():
 	return player
@@ -16,8 +16,7 @@ func _physics_process(delta):
 	var pos = global_position
 	
 	if player:
-		pass
 		#print(pos.distance_to(player.global_position))
-		#if pos.distance_to(player.global_position) > chase_distance:
-			#player = null
+		if pos.distance_to(player.global_position) > chase_distance:
+			player = null
 		
