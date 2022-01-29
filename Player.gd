@@ -103,7 +103,4 @@ func roll_animation_finished():
 func set_max_speed(value):
 	MAX_SPEED = value * 20
 	print(MAX_SPEED)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
