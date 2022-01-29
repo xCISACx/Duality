@@ -15,8 +15,7 @@ func _physics_process(delta):
 	if player:
 		#print(pos.distance_to(player.global_position))
 		if pos.distance_to(player.global_position) > chase_distance:
-			pass
-			#player = null
+			player = null
 			
 	print(player)
 		

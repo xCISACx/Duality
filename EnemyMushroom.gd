@@ -10,6 +10,8 @@ export var WANDER_TARGET_THRESHOLD = 4
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 
+var last_position
+
 onready var sprite = $Sprite
 onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
@@ -51,10 +53,13 @@ func _physics_process(delta):
 		CHASE:
 			animationState.travel("move")
 			var player = playerDetectionZone.player
+			last_position = global_position
 			if player != null:
 				accelerate_towards_point(player.global_position, delta)
 			else:
-				state = IDLE
+				accelerate_towards_point(last_position, delta)
+				if global_position.distance_to(last_position) <= 1:
+					state = IDLE
 				
 	velocity = move_and_slide(velocity)
 			
