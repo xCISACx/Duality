@@ -4,7 +4,17 @@ enum ItemType {HEALTH,STAMINA,SPEED}
 export (ItemType) var type	
 
 func _ready():
-	pass
+	
+	match(type):
+			ItemType.HEALTH:
+				$Sprite.texture = load("res://item_health-speed.png")
+				pass
+			ItemType.STAMINA:
+				$Sprite.texture = load("res://item_stamina-health.png")
+				pass
+			ItemType.SPEED:
+				$Sprite.texture = load("res://item_speed-stamina.png")
+				pass
 
 func _on_Area2D_body_entered(body):
 	if (body.is_in_group("Player")):
@@ -37,3 +47,4 @@ func PickupSpeed():
 	print("Picked Up Speed")
 	PlayerStats.set_max_speed(PlayerStats.max_speed + 1)
 	PlayerStats.set_max_stamina(PlayerStats.max_stamina - 1)
+	PlayerStats.set_speed(PlayerStats.max_speed)

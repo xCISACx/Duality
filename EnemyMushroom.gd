@@ -49,7 +49,7 @@ func _physics_process(delta):
 				update_wander()
 				
 		WANDER:
-			animationState.travel("move")
+			animationState.travel("wander")
 			seek_player()
 			if wanderController.get_time_left() == 0:
 				update_wander()
@@ -62,7 +62,7 @@ func _physics_process(delta):
 				
 		CHASE:
 			shoot_timer.stop()
-			animationState.travel("move")
+			animationState.travel("chase")
 			
 			if player:
 				accelerate_towards_point(player.global_position, delta)
@@ -76,7 +76,6 @@ func _physics_process(delta):
 					if hit_object.is_in_group("Player"):
 						reset_timer.start()
 						#print("hit player")
-						reset_timer.stop()
 						state = ATTACK
 					elif hit_object.is_in_group("Walls"):
 						#print("hit wall")
@@ -90,6 +89,7 @@ func _physics_process(delta):
 					
 					
 		ATTACK:
+			reset_timer.stop()
 			if shoot_timer.is_stopped():
 				can_shoot = true
 			velocity = Vector2.ZERO
@@ -102,7 +102,7 @@ func _physics_process(delta):
 				
 				
 	velocity = move_and_slide(velocity)
-			
+	print(reset_timer.time_left)
 			
 			
 func shoot_towards(direction):
@@ -110,11 +110,9 @@ func shoot_towards(direction):
 	get_tree().get_root().add_child(bullet)
 	bullet.position = global_position
 	bullet.direction = direction
+	bullet.get_node("Pivot").rotation_degrees = direction.angle()
 	can_shoot = false
 	shoot_timer.start()
-	
-			
-			
 			
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
@@ -134,8 +132,6 @@ func update_wander():
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front() #pick the first random result
-
-
 
 func _on_Timer_timeout():
 	player = null

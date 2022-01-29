@@ -85,16 +85,40 @@ tracks/1/keys = {
 } ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("HitBox2/CollisionShape2D:disabled")
+tracks/2/path = NodePath("PoundHitBox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.7, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true, false, true ]
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PoundHitBox/CollisionShape2D:shape:radius")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.65, 0.7, 0.75, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 9.0, 10.0, 12.0, 13.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("PoundHitBox/CollisionShape2D:shape:height")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.65, 0.7, 0.75, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 8.0, 8.0, 8.0, 10.0 ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -166,7 +190,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("HitBox2/CollisionShape2D:disabled")
+tracks/1/path = NodePath("PoundHitBox/CollisionShape2D:shape:radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -175,11 +199,36 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
+"values": [ 17.0294 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PoundHitBox/CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 8.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PoundHitBox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
 "values": [ true ]
 }
 
-[sub_resource type="CircleShape2D" id=20]
-radius = 19.105
+[sub_resource type="CapsuleShape2D" id=20]
+radius = 17.0294
+height = 8.0
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 16
@@ -198,7 +247,7 @@ shape = SubResource( 1 )
 
 [node name="HurtBox" type="Area2D" parent="."]
 visible = false
-collision_layer = 8
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
@@ -223,7 +272,6 @@ shape = SubResource( 3 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 8 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -239,11 +287,13 @@ autostart = true
 
 [node name="RayPivot" type="Node2D" parent="."]
 
-[node name="HitBox2" parent="." instance=ExtResource( 3 )]
+[node name="PoundHitBox" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 7 )
 collision_layer = 16
 collision_mask = 5
 
-[node name="CollisionShape2D" parent="HitBox2" index="0"]
+[node name="CollisionShape2D" parent="PoundHitBox" index="0"]
+rotation = -1.5708
 shape = SubResource( 20 )
 disabled = true
 
@@ -252,4 +302,4 @@ disabled = true
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 [editable path="HitBox"]
-[editable path="HitBox2"]
+[editable path="PoundHitBox"]

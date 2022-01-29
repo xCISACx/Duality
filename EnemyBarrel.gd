@@ -32,6 +32,10 @@ enum {
 	ATTACK
 }
 
+func _ready():
+	$AnimationTree.active = true
+	$"PoundHitBox/CollisionShape2D".disabled = true
+
 func _physics_process(delta):		
 	match state:
 		IDLE:
