@@ -54,6 +54,7 @@ func _physics_process(delta):
 				if result:
 					hit_position = result.position
 					$RayPivot.rotation = (player.position - position).angle()
+					print("a")
 					
 			if player != null and can_move:
 				accelerate_towards_point(player.global_position, delta)
