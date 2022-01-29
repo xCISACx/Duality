@@ -23,11 +23,7 @@ onready var raycast_node = $RayCast2D
 onready var reset_timer = $Timer
 onready var shoot_timer = $ShootingTimer
 onready var animationState = animationTree.get("parameters/playback")
-onready var enemystat = $EnemyStat
-onready var hurtbox = $Hurtbox
 const BulletScene = preload("res://BulletScene.tscn")
-
-signal start_invincibility
 
 var state = IDLE
 
@@ -40,7 +36,6 @@ enum {
 
 func _ready():
 	state = pick_random_state([IDLE, WANDER])
-	enemystat.connect("no_health", self, "death")
 	
 func _physics_process(delta):		
 	match state:
@@ -144,12 +139,3 @@ func _on_Timer_timeout():
 
 func _on_ShootingTimer_timeout():
 	can_shoot = true
-	
-func death():
-	queue_free()
-
-func _on_HurtBox_area_entered(area):
-	enemystat.set_health(enemystat.health - area.damage)
-	emit_signal("start_invincibility")
-	print(enemystat.health)
-	pass
