@@ -8,6 +8,8 @@ export var FRICTION = 500
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
 onready var swordHitbox = $"HitBoxPivot/SwordHitBox"
+onready var collsword = $"HitBoxPivot/SwordHitBox/CollisionShape2D"
+onready var hurtbox = $"HurtBox/CollisionShape2D"
 
 enum {
 	MOVE,
@@ -34,6 +36,8 @@ func _ready():
 	randomize()
 	animation_tree.active = true
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
+	collsword.disabled = true
+	hurtbox.disabled = false
 	pass # Replace with function body.
 	
 func move_state(delta):
