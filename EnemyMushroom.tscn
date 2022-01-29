@@ -212,7 +212,8 @@ parameters/playback = SubResource( 12 )
 enabled = true
 collision_mask = 3
 
-[node name="Timer" type="Timer" parent="."]
+[node name="ResetTimer" type="Timer" parent="."]
+process_priority = -100
 wait_time = 6.0
 one_shot = true
 
@@ -221,7 +222,7 @@ wait_time = 1.5
 
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="ShootingTimer" to="." method="_on_ShootingTimer_timeout"]
 
 [editable path="HitBox"]

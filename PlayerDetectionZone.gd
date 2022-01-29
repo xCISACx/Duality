@@ -7,8 +7,6 @@ func can_see_player():
 	return player
 
 func _on_PlayerDetectionZone_body_entered(body):
-	if player:
-		return
 	player = body
 	print("entered")
 

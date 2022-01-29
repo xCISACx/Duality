@@ -36,6 +36,8 @@ tile_data = PoolIntArray( -458760, 8, 0, -458759, 8, 0, -458758, 8, 0, -458757, 
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 109, 15 )
+z_index = 2
 
 [node name="Enemies" type="YSort" parent="YSort"]
 z_index = 1
@@ -44,7 +46,7 @@ z_index = 1
 position = Vector2( -142.07, 44.2143 )
 
 [node name="EnemyMushroom" parent="YSort/Enemies" instance=ExtResource( 7 )]
-position = Vector2( 90.1095, -154.827 )
+position = Vector2( 52, 0 )
 
 [node name="Pickups" type="YSort" parent="YSort"]
 z_index = 1

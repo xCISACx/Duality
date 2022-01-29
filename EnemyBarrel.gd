@@ -48,21 +48,14 @@ func _physics_process(delta):
 			var player = playerDetectionZone.player
 			animationState.travel("attack")
 			#print("chase")
-			var space_state = get_world_2d().direct_space_state
-			if player:
-				var result = space_state.intersect_ray(position, player.position, [self])
-				if result:
-					hit_position = result.position
-					$RayPivot.rotation = (player.position - position).angle()
-					print("a")
-					
+			
 			if player != null and can_move:
 				accelerate_towards_point(player.global_position, delta)
 				#print("go to player")
-			else:
+			elif player == null and can_move:
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
-					state = IDLE			
+					state = IDLE	
 				
 	velocity = move_and_slide(velocity)
 			
@@ -84,7 +77,9 @@ func toggle_apex():
 	
 func start_wait_timer():
 	$Timer.start()
+	velocity = Vector2.ZERO
 	can_move = false
+	
 
 func _on_Timer_timeout():
 	can_move = true

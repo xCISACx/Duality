@@ -20,7 +20,7 @@ onready var wanderController = $WanderController
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
 onready var raycast_node = $RayCast2D
-onready var reset_timer = $Timer
+onready var reset_timer = $ResetTimer
 onready var shoot_timer = $ShootingTimer
 onready var animationState = animationTree.get("parameters/playback")
 const BulletScene = preload("res://BulletScene.tscn")
@@ -61,48 +61,45 @@ func _physics_process(delta):
 				last_position = global_position
 				
 		CHASE:
-			shoot_timer.stop()
-			animationState.travel("chase")
+			if reset_timer.time_left <= .35 and reset_timer.time_left > .15:
+				_on_reset_timer_timeout()
 			
+			animationState.travel("chase")
 			if player:
+				if reset_timer.is_stopped():
+					reset_timer.start()
 				accelerate_towards_point(player.global_position, delta)
-				
-				var direction_to_player = global_position.direction_to(player.global_position)
-				raycast_node.set_cast_to(direction_to_player * 100)
-				var hit_object = raycast_node.get_collider()
-				
-				if hit_object:
-					#print("hit something")
-					if hit_object.is_in_group("Player"):
-						reset_timer.start()
-						#print("hit player")
+				if raycast_for_player(): #if the enemy sees the player
+					if global_position.distance_to(player.position) <= 80:
+						reset_timer.stop() #stop the player reset timer
 						state = ATTACK
-					elif hit_object.is_in_group("Walls"):
-						#print("hit wall")
-						_on_Timer_timeout()
 						
 			else:
-				seek_player()
+				#seek_player()
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
 					state = IDLE
 					
 					
 		ATTACK:
-			reset_timer.stop()
-			if shoot_timer.is_stopped():
-				can_shoot = true
-			velocity = Vector2.ZERO
-			animationState.travel("attack")
-			if global_position.distance_to(player.position) >= 85:
+			print("attacking")
+			if raycast_for_player():
+				if shoot_timer.is_stopped():
+					can_shoot = true
+				velocity = Vector2.ZERO
+				animationState.travel("attack")
+				if player and can_shoot:
+					var direction_to_player = global_position.direction_to(player.global_position)
+					shoot_towards(direction_to_player)
+			else:
+				shoot_timer.stop()
 				state = CHASE
-			elif player and can_shoot:
-				var direction_to_player = global_position.direction_to(player.global_position)
-				shoot_towards(direction_to_player)
-				
 				
 	velocity = move_and_slide(velocity)
 	print(reset_timer.time_left)
+	print(state)
+	if player:
+		print(raycast_for_player())
 			
 			
 func shoot_towards(direction):
@@ -132,8 +129,25 @@ func update_wander():
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front() #pick the first random result
-
-func _on_Timer_timeout():
+	
+func raycast_for_player() -> bool:
+	var direction_to_player = global_position.direction_to(player.global_position)
+	raycast_node.set_cast_to(direction_to_player * 100)
+	var hit_object = raycast_node.get_collider()
+	
+	if hit_object:
+		#print("hit something")
+		if hit_object.is_in_group("Player"):
+			#print("hit player")
+			return true
+		elif hit_object.is_in_group("Walls"):
+			#print("hit wall")
+			return false
+	return false
+	
+func _on_reset_timer_timeout():
+	print("set player to null")
+	playerDetectionZone.player = null
 	player = null
 
 
