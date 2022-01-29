@@ -13,6 +13,9 @@ height = 4.0
 radius = 7.0
 height = 10.0
 
+[sub_resource type="CapsuleShape2D" id=71]
+radius = 8.0
+
 [sub_resource type="Animation" id=3]
 resource_name = "Attack Down"
 length = 0.4
@@ -773,9 +776,6 @@ graph_offset = Vector2( -54, -83 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
-[sub_resource type="CapsuleShape2D" id=71]
-radius = 8.0
-
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -804,6 +804,18 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 0, 8 )
 shape = SubResource( 2 )
+disabled = true
+
+[node name="HitBoxPivot" type="Position2D" parent="."]
+position = Vector2( 0, 6 )
+
+[node name="SwordHitBox" parent="HitBoxPivot" instance=ExtResource( 4 )]
+position = Vector2( -4, -15 )
+
+[node name="CollisionShape2D" parent="HitBoxPivot/SwordHitBox" index="0"]
+position = Vector2( 4, 31 )
+rotation = 1.5708
+shape = SubResource( 71 )
 disabled = true
 
 [node name="PlayerStats" parent="." instance=ExtResource( 3 )]
@@ -840,18 +852,6 @@ parameters/Death/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Roll/blend_position = Vector2( 0, 0 )
 parameters/Walk/blend_position = Vector2( 0, 0 )
-
-[node name="HitBoxPivot" type="Position2D" parent="."]
-position = Vector2( 0, 6 )
-
-[node name="SwordHitBox" parent="HitBoxPivot" instance=ExtResource( 4 )]
-position = Vector2( -4, -15 )
-
-[node name="CollisionShape2D" parent="HitBoxPivot/SwordHitBox" index="0"]
-position = Vector2( 4, 31 )
-rotation = 1.5708
-shape = SubResource( 71 )
-disabled = true
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 
