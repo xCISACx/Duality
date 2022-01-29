@@ -7,6 +7,7 @@ export var FRICTION = 500
 
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
+onready var swordHitbox = $"HitBoxPivot/SwordHitBox"
 
 enum {
 	MOVE,
@@ -24,10 +25,14 @@ func _physics_process(delta):
 			move_state(delta)
 		ROLL:
 			roll_state()
+		ATTACK:
+			attack_state()
 		
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
+	animation_tree.active = true
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
 	pass # Replace with function body.
 	
@@ -39,7 +44,7 @@ func move_state(delta):
 	
 	if (input_vector != Vector2.ZERO):
 		roll_vector = input_vector
-		#swordHitbox.knockback_vector = input_vector
+		swordHitbox.knockback_vector = input_vector
 		
 		animation_tree.set("parameters/Idle/blend_position", input_vector)
 		animation_tree.set("parameters/Walk/blend_position", input_vector)
@@ -66,6 +71,9 @@ func move_state(delta):
 			state = ROLL
 #		else:
 #			print("Can't roll!")
+
+	if (Input.is_action_just_pressed("attack")):
+		state = ATTACK
 	
 func move():
 	velocity = move_and_slide(velocity)
@@ -74,6 +82,14 @@ func roll_state():
 	velocity = roll_vector * ROLL_SPEED
 	animation_state.travel("Roll")
 	move()
+	
+func attack_state():
+	#velocity = Vector2.ZERO
+	animation_state.travel("Attack")
+	move()
+	
+func attack_animation_finished():
+	state = MOVE
 	
 func roll_animation_finished():
 	$HurtBox/CollisionShape2D.disabled = false
