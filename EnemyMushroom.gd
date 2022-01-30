@@ -14,6 +14,7 @@ onready var last_position = global_position
 var hit_position = Vector2.ZERO
 var player = null
 var can_shoot = true
+var pickup = load("res://Pickup.tscn")
 
 onready var sprite = $Sprite
 onready var wanderController = $WanderController
@@ -159,6 +160,17 @@ func _on_ShootingTimer_timeout():
 	can_shoot = true
 	
 func death():
+	var enemydrop = pickup.instance()
+	var randomint = randi() % 2
+	match (randomint):
+		0:
+			enemydrop.type = 0
+		1:
+			enemydrop.type = 1
+		2:
+			enemydrop.type = 2
+	get_tree().get_root().add_child(enemydrop)
+	enemydrop.position = global_position
 	queue_free()
 	
 func _on_HurtBox_area_entered(area):

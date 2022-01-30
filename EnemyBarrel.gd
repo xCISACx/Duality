@@ -15,6 +15,7 @@ var apex = false
 var can_move = true
 var player
 var hit_position = Vector2.ZERO
+var pickup = load("res://Pickup.tscn")
 onready var last_position = global_position
 
 onready var sprite = $Sprite
@@ -83,7 +84,6 @@ func start_wait_timer():
 	$Timer.start()
 	velocity = Vector2.ZERO
 	can_move = false
-	
 
 func _on_Timer_timeout():
 	can_move = true
@@ -93,10 +93,21 @@ func _process(delta):
 	pass
 	
 func death():
+	var enemydrop = pickup.instance()
+	var randomint = randi() % 2
+	match (randomint):
+		0:
+			enemydrop.type = 0
+		1:
+			enemydrop.type = 1
+		2:
+			enemydrop.type = 2
+	get_tree().get_root().add_child(enemydrop)
+	enemydrop.position = global_position
 	queue_free()
-
 
 func _on_HurtBox_area_entered(area):
 	enemystat.set_health(enemystat.health - area.damage)
 	emit_signal("start_invincibility")
 	print(enemystat.health)
+	
