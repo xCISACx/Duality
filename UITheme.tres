@@ -1,9 +1,11 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=7 format=2]
 
 [ext_resource path="res://Font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://SBT_Normal.tres" type="StyleBox" id=2]
 [ext_resource path="res://SBT_Pressed.tres" type="StyleBox" id=3]
 [ext_resource path="res://SBT_Hover.tres" type="StyleBox" id=4]
+[ext_resource path="res://switchon.png" type="Texture" id=5]
+[ext_resource path="res://switchoff.png" type="Texture" id=6]
 
 [resource]
 Button/colors/font_color = Color( 1, 1, 1, 1 )
@@ -18,3 +20,5 @@ Button/styles/focus = null
 Button/styles/hover = ExtResource( 4 )
 Button/styles/normal = ExtResource( 2 )
 Button/styles/pressed = ExtResource( 3 )
+CheckButton/icons/off = ExtResource( 6 )
+CheckButton/icons/on = ExtResource( 5 )
