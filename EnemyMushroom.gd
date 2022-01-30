@@ -73,22 +73,27 @@ func _physics_process(delta):
 			if player:
 				if reset_timer.is_stopped():
 					reset_timer.start()
-				accelerate_towards_point(player.global_position, delta)
-				if raycast_for_player(): #if the enemy sees the player
-					if global_position.distance_to(player.position) <= 80:
-						reset_timer.stop() #stop the player reset timer
+				if raycast_for_player() or global_position.distance_to(player.position) < 10: #if the enemy sees the player
+					if global_position.distance_to(player.position) < 80:
+						reset_timer.start() #stop the player reset timer
 						state = ATTACK
+				else:
+					accelerate_towards_point(player.global_position, delta)
 						
 			else:
-				#seek_player()
+				seek_player()
 				accelerate_towards_point(last_position, delta)
 				if global_position.distance_to(last_position) <= 5:
 					state = IDLE
 					
 					
 		ATTACK:
+			if reset_timer.time_left <= .35 and reset_timer.time_left > .15:
+				shoot_timer.stop()
+				state = CHASE
 			print("attacking")
-			if raycast_for_player():
+			if raycast_for_player() or global_position.distance_to(player.position) < 10:
+				reset_timer.start()
 				if shoot_timer.is_stopped():
 					can_shoot = true
 				velocity = Vector2.ZERO
@@ -96,9 +101,9 @@ func _physics_process(delta):
 				if player and can_shoot:
 					var direction_to_player = global_position.direction_to(player.global_position)
 					shoot_towards(direction_to_player)
-			else:
-				shoot_timer.stop()
+			elif global_position.distance_to(player.position) > 30:
 				state = CHASE
+				
 				
 	velocity = move_and_slide(velocity)
 	print(reset_timer.time_left)

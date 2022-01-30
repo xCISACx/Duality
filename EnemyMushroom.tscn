@@ -226,7 +226,6 @@ wait_time = 6.0
 one_shot = true
 
 [node name="ShootingTimer" type="Timer" parent="."]
-wait_time = 3.0
 
 [node name="EnemyStat" parent="." instance=ExtResource( 6 )]
 
