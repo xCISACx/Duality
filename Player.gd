@@ -42,6 +42,7 @@ func _physics_process(delta):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Variables.player = self
 	randomize()
 	animation_tree.active = true
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")

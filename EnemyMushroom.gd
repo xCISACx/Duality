@@ -169,7 +169,7 @@ func death():
 			enemydrop.type = 1
 		2:
 			enemydrop.type = 2
-	get_tree().get_root().add_child(enemydrop)
+	Variables.root.add_child(enemydrop)
 	enemydrop.position = global_position
 	queue_free()
 	

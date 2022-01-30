@@ -27,6 +27,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerStats="*res://PlayerStats.tscn"
+Variables="*res://Variables.gd"
 
 [display]
 

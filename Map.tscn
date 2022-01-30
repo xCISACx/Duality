@@ -1,15 +1,17 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://CliffTilesetDup.tres" type="TileSet" id=2]
 [ext_resource path="res://EnemyBarrel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Tree.tscn" type="PackedScene" id=4]
 [ext_resource path="res://GroundTileset.tres" type="TileSet" id=5]
+[ext_resource path="res://Map.gd" type="Script" id=6]
 [ext_resource path="res://EnemyMushroom.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Player UI.tscn" type="PackedScene" id=9]
 
 [node name="Map" type="Node2D"]
+script = ExtResource( 6 )
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -2
@@ -54,6 +56,14 @@ position = Vector2( 143, -9 )
 [node name="StaticBody2D2" parent="YSort/Trees" instance=ExtResource( 4 )]
 position = Vector2( 126, 45 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Player UI" parent="CanvasLayer" instance=ExtResource( 9 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 64.0
+margin_bottom = 16.0
+
 [node name="Pickup" parent="." instance=ExtResource( 8 )]
 position = Vector2( -47.1545, -113.588 )
 
@@ -84,11 +94,3 @@ type = 2
 position = Vector2( -128, -69 )
 scale = Vector2( 0.993489, 1.02205 )
 type = 2
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Player UI" parent="CanvasLayer" instance=ExtResource( 9 )]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 64.0
-margin_bottom = 16.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player-new2.png" type="Texture" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://Audio/attack.wav" type="AudioStream" id=5]
 [ext_resource path="res://Audio/powerup.wav" type="AudioStream" id=6]
 [ext_resource path="res://PowerUpSpriteFrames.tres" type="SpriteFrames" id=7]
-[ext_resource path="res://HurtBox.gd" type="Script" id=8]
+[ext_resource path="res://HurtBox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://FlashShader.gdshader" type="Shader" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -17,10 +17,6 @@ height = 4.0
 [sub_resource type="ShaderMaterial" id=74]
 shader = ExtResource( 9 )
 shader_param/active = false
-
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 7.0
-height = 10.0
 
 [sub_resource type="CapsuleShape2D" id=71]
 radius = 8.0
@@ -964,7 +960,7 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpBack"
-frame = 6
+frame = 5
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -979,18 +975,7 @@ frame = 84
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[node name="HurtBox" type="Area2D" parent="."]
-position = Vector2( 0, -2 )
-collision_layer = 4
-collision_mask = 0
-script = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2( 0, 8 )
-shape = SubResource( 2 )
-disabled = true
-
-[node name="Timer" type="Timer" parent="HurtBox"]
+[node name="HurtBox" parent="." instance=ExtResource( 8 )]
 
 [node name="HitBoxPivot" type="Position2D" parent="."]
 position = Vector2( 0, 6 )
@@ -1058,7 +1043,7 @@ stream = ExtResource( 6 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpFront"
-frame = 6
+frame = 5
 playing = true
 
 [node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -1070,13 +1055,6 @@ anims/PowerUp = SubResource( 72 )
 anims/Start = SubResource( 75 )
 anims/Stop = SubResource( 76 )
 
-[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
-[connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
-[connection signal="invincibility_ended" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_ended"]
-[connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
-[connection signal="invincibility_started" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_started"]
-[connection signal="something_hit" from="HurtBox" to="HurtBox" method="_on_HurtBox_something_hit"]
-[connection signal="timeout" from="HurtBox/Timer" to="HurtBox" method="_on_Timer_timeout"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
 [connection signal="timeout" from="StaminaTimeout" to="." method="_on_StaminaTimeout_timeout"]
 
