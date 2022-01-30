@@ -36,7 +36,7 @@ func hide_settings():
 	controlsSettings.hide()
 
 func _on_StartButton_pressed():
-	get_tree().change_scene("res://Map.tscn")
+	get_tree().change_scene("res://Main.tscn")
 
 
 func _on_OptionsButton_pressed():

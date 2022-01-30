@@ -948,6 +948,7 @@ tracks/0/keys = {
 }
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
+z_index = 5
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -960,7 +961,7 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpBack"
-frame = 3
+frame = 6
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -1048,7 +1049,7 @@ bus = "SFX"
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpFront"
-frame = 3
+frame = 6
 playing = true
 
 [node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]
