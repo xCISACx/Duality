@@ -1,0 +1,368 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://buttonUi.png" type="Texture" id=1]
+[ext_resource path="res://MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://UITheme.tres" type="Theme" id=3]
+[ext_resource path="res://Audio/attack.wav" type="AudioStream" id=4]
+[ext_resource path="res://bgm.wav" type="AudioStream" id=5]
+
+[node name="StartMenu" type="Control"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+margin_left = 40.0
+margin_right = 280.0
+margin_bottom = 180.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="MainMenu"]
+margin_top = 47.0
+margin_right = 240.0
+margin_bottom = 73.0
+theme = ExtResource( 3 )
+text = "START GAME"
+
+[node name="SettingsButton" type="Button" parent="MainMenu"]
+margin_top = 77.0
+margin_right = 240.0
+margin_bottom = 103.0
+theme = ExtResource( 3 )
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="MainMenu"]
+margin_top = 107.0
+margin_right = 240.0
+margin_bottom = 133.0
+theme = ExtResource( 3 )
+text = "QUIT"
+
+[node name="SettingsMenu" type="Popup" parent="."]
+visible = true
+margin_left = 40.0
+margin_right = 282.0
+margin_bottom = 179.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="SettingsMenu"]
+margin_right = 243.0
+margin_bottom = 180.0
+texture = ExtResource( 1 )
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsMenu"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -28.0
+margin_top = 9.0
+margin_right = 28.0
+margin_bottom = 23.0
+text = "SETTINGS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="VBoxContainer" parent="SettingsMenu"]
+margin_left = 10.0
+margin_top = 34.0
+margin_right = 234.0
+margin_bottom = 172.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonContainer" type="HBoxContainer" parent="SettingsMenu/Menu"]
+margin_right = 224.0
+margin_bottom = 26.0
+size_flags_vertical = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VideoButton" type="Button" parent="SettingsMenu/Menu/ButtonContainer"]
+margin_right = 72.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+theme = ExtResource( 3 )
+text = "VIDEO"
+
+[node name="AudioButton" type="Button" parent="SettingsMenu/Menu/ButtonContainer"]
+margin_left = 76.0
+margin_right = 148.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+theme = ExtResource( 3 )
+text = "AUDIO"
+
+[node name="ControlsButton" type="Button" parent="SettingsMenu/Menu/ButtonContainer"]
+margin_left = 152.0
+margin_right = 224.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+theme = ExtResource( 3 )
+text = "CONTROLS"
+
+[node name="SettingsContainer" type="VBoxContainer" parent="SettingsMenu/Menu"]
+margin_top = 30.0
+margin_right = 224.0
+margin_bottom = 106.0
+size_flags_vertical = 0
+
+[node name="VideoSettings" type="GridContainer" parent="SettingsMenu/Menu/SettingsContainer"]
+visible = false
+margin_right = 224.0
+margin_bottom = 48.0
+columns = 2
+
+[node name="Label2" type="Label" parent="SettingsMenu/Menu/SettingsContainer/VideoSettings"]
+margin_top = 5.0
+margin_right = 110.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Fullscreen"
+
+[node name="CheckBox" type="CheckBox" parent="SettingsMenu/Menu/SettingsContainer/VideoSettings"]
+margin_left = 200.0
+margin_right = 224.0
+margin_bottom = 24.0
+size_flags_horizontal = 8
+
+[node name="Label3" type="Label" parent="SettingsMenu/Menu/SettingsContainer/VideoSettings"]
+margin_top = 31.0
+margin_right = 110.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+text = "Resolution"
+
+[node name="OptionButton" type="OptionButton" parent="SettingsMenu/Menu/SettingsContainer/VideoSettings"]
+margin_left = 114.0
+margin_top = 28.0
+margin_right = 224.0
+margin_bottom = 48.0
+size_flags_horizontal = 3
+text = "1920x1080"
+
+[node name="AudioSettings" type="GridContainer" parent="SettingsMenu/Menu/SettingsContainer"]
+margin_right = 224.0
+margin_bottom = 76.0
+columns = 4
+
+[node name="Master" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 15.0
+margin_top = 1.0
+margin_right = 59.0
+margin_bottom = 15.0
+size_flags_horizontal = 6
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 79.0
+margin_right = 154.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="MasterValue" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 158.0
+margin_top = 1.0
+margin_right = 179.0
+margin_bottom = 15.0
+size_flags_horizontal = 8
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MasterTestButton" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 223.0
+margin_right = 223.0
+margin_bottom = 14.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource( 3 )
+
+[node name="BGM" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 26.0
+margin_top = 26.0
+margin_right = 49.0
+margin_bottom = 40.0
+size_flags_horizontal = 6
+text = "BGM"
+
+[node name="BGMSlider" type="HSlider" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 79.0
+margin_top = 25.0
+margin_right = 154.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="BGMValue" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 158.0
+margin_top = 26.0
+margin_right = 179.0
+margin_bottom = 40.0
+text = "100"
+
+[node name="BGMTestButton" type="Button" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 183.0
+margin_top = 20.0
+margin_right = 223.0
+margin_bottom = 46.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = ExtResource( 3 )
+text = "TEST"
+
+[node name="BGMAudioStreamPlayer" type="AudioStreamPlayer" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings/BGMTestButton"]
+stream = ExtResource( 5 )
+bus = "BGM"
+
+[node name="SFX" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 26.0
+margin_top = 56.0
+margin_right = 48.0
+margin_bottom = 70.0
+size_flags_horizontal = 6
+text = "SFX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SFXSlider" type="HSlider" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 79.0
+margin_top = 55.0
+margin_right = 154.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.1
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SFXValue" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 158.0
+margin_top = 56.0
+margin_right = 179.0
+margin_bottom = 70.0
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SFXTestButton" type="Button" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
+margin_left = 183.0
+margin_top = 50.0
+margin_right = 223.0
+margin_bottom = 76.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = ExtResource( 3 )
+text = "TEST"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SFXAudioStreamPlayer" type="AudioStreamPlayer" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings/SFXTestButton"]
+stream = ExtResource( 4 )
+bus = "SFX"
+
+[node name="ControlSettings" type="GridContainer" parent="SettingsMenu/Menu/SettingsContainer"]
+visible = false
+margin_top = 52.0
+margin_right = 224.0
+margin_bottom = 120.0
+columns = 2
+
+[node name="MovementLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_right = 98.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Movement"
+
+[node name="MovementKeysLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_left = 102.0
+margin_right = 224.0
+margin_bottom = 14.0
+size_flags_horizontal = 8
+text = "W, A, S, D or Arrows"
+
+[node name="AttackLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_top = 18.0
+margin_right = 98.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "Attack"
+
+[node name="AttackKeysLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_left = 186.0
+margin_top = 18.0
+margin_right = 224.0
+margin_bottom = 32.0
+size_flags_horizontal = 8
+text = "Z or K"
+
+[node name="RollLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_top = 36.0
+margin_right = 98.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+text = "Roll"
+
+[node name="RollKeyLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_left = 185.0
+margin_top = 36.0
+margin_right = 224.0
+margin_bottom = 50.0
+size_flags_horizontal = 8
+text = "X or J"
+
+[node name="PickUpLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_top = 54.0
+margin_right = 98.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+text = "Pick Up Item"
+
+[node name="PickUpKeyLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
+margin_left = 186.0
+margin_top = 54.0
+margin_right = 224.0
+margin_bottom = 68.0
+size_flags_horizontal = 8
+text = "C or L"
+
+[connection signal="pressed" from="MainMenu/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="MainMenu/SettingsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="MainMenu/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="SettingsMenu/Menu/ButtonContainer/VideoButton" to="." method="_on_VideoButton_pressed"]
+[connection signal="pressed" from="SettingsMenu/Menu/ButtonContainer/AudioButton" to="." method="_on_AudioButton_pressed"]
+[connection signal="pressed" from="SettingsMenu/Menu/ButtonContainer/ControlsButton" to="." method="_on_ControlsButton_pressed"]
+[connection signal="value_changed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/MasterSlider" to="." method="_on_MasterSlider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/BGMSlider" to="." method="_on_BGMSlider_value_changed"]
+[connection signal="pressed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/BGMTestButton" to="." method="_on_BGMTestButton_pressed"]
+[connection signal="value_changed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/SFXSlider" to="." method="_on_SFXSlider_value_changed"]
+[connection signal="pressed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/SFXTestButton" to="." method="_on_SFXTestButton_pressed"]

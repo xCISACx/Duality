@@ -9,6 +9,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Variables.root = self
+	BackgroundMusic.get_node("AudioStreamPlayer").play()
 	pass # Replace with function body.
 
 

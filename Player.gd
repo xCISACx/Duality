@@ -38,6 +38,7 @@ func _physics_process(delta):
 			attack_state()
 		DEATH:
 			death_state()
+	print("invincible: " + String($HurtBox.invincible))
 		
 
 # Called when the node enters the scene tree for the first time.
@@ -127,6 +128,7 @@ func _on_HurtBox_area_entered(area):
 	knockback = area.knockback_vector * 120
 	#hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.4)
+	print(PlayerStats.health)
 	
 func _on_HurtBox_invincibility_started():
 	flashAnimationPlayer.play("Start")

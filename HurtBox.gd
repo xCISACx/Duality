@@ -25,7 +25,7 @@ func _on_Timer_timeout():
 	self.invincible = false
 
 func _on_HurtBox_invincibility_started():
-	coll2d.set_deferred("disabled", true)
+	coll2d.disabled = true
 
 func _on_HurtBox_invincibility_ended():
 	coll2d.disabled = false

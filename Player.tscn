@@ -960,7 +960,7 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpBack"
-frame = 5
+frame = 3
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -976,6 +976,9 @@ frame = 84
 current = true
 
 [node name="HurtBox" parent="." instance=ExtResource( 8 )]
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+disabled = false
 
 [node name="HitBoxPivot" type="Position2D" parent="."]
 position = Vector2( 0, 6 )
@@ -1035,15 +1038,17 @@ one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+bus = "SFX"
 
 [node name="PowerUpAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+bus = "SFX"
 
 [node name="PowerUpFrontAnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpFront"
-frame = 5
+frame = 3
 playing = true
 
 [node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -1055,7 +1060,11 @@ anims/PowerUp = SubResource( 72 )
 anims/Start = SubResource( 75 )
 anims/Stop = SubResource( 76 )
 
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
+[connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
 [connection signal="timeout" from="StaminaTimeout" to="." method="_on_StaminaTimeout_timeout"]
 
+[editable path="HurtBox"]
 [editable path="HitBoxPivot/SwordHitBox"]

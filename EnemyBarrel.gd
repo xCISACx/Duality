@@ -25,6 +25,7 @@ onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var hitbox = $HitBox2/CollisionShape2D
 onready var enemystat = $EnemyStat
+onready var flashAnimationPlayer = $FlashAnimationPlayer
 
 signal start_invincibility
 
@@ -81,7 +82,7 @@ func toggle_apex():
 	apex = !apex
 	
 func start_wait_timer():
-	$Timer.start()
+	$PoundTimer.start()
 	velocity = Vector2.ZERO
 	can_move = false
 
@@ -110,5 +111,11 @@ func death():
 func _on_HurtBox_area_entered(area):
 	enemystat.set_health(enemystat.health - area.damage)
 	emit_signal("start_invincibility")
+	$HurtBox.start_invincibility(0.4)
 	print(enemystat.health)
-	
+
+func _on_HurtBox_invincibility_started():
+	flashAnimationPlayer.play("Start")
+
+func _on_HurtBox_invincibility_ended():
+	flashAnimationPlayer.play("Stop")

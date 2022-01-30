@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=5 format=2]
+
+[ext_resource path="res://Font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://SBT_Normal.tres" type="StyleBox" id=2]
+[ext_resource path="res://SBT_Pressed.tres" type="StyleBox" id=3]
+[ext_resource path="res://SBT_Hover.tres" type="StyleBox" id=4]
+
+[resource]
+Button/colors/font_color = Color( 1, 1, 1, 1 )
+Button/colors/font_color_disabled = Color( 0.588235, 0.588235, 0.588235, 1 )
+Button/colors/font_color_focus = Color( 1, 1, 1, 1 )
+Button/colors/font_color_hover = Color( 0.92549, 0.792157, 0.0823529, 1 )
+Button/colors/font_color_pressed = Color( 0.878431, 0.760784, 0.133333, 1 )
+Button/constants/hseparation = 0
+Button/fonts/font = ExtResource( 1 )
+Button/styles/disabled = ExtResource( 2 )
+Button/styles/focus = null
+Button/styles/hover = ExtResource( 4 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 3 )

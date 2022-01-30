@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://EnemyMushroom.gd" type="Script" id=1]
 [ext_resource path="res://mushroomman_new-export.png" type="Texture" id=2]
@@ -7,6 +7,11 @@
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://EnemyStat.tscn" type="PackedScene" id=6]
 [ext_resource path="res://HurtBox.gd" type="Script" id=7]
+[ext_resource path="res://FlashShader.gdshader" type="Shader" id=8]
+
+[sub_resource type="ShaderMaterial" id=26]
+shader = ExtResource( 8 )
+shader_param/active = false
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -153,11 +158,46 @@ graph_offset = Vector2( -55, -45 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
+[sub_resource type="Animation" id=27]
+resource_name = "Start"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=28]
+resource_name = "Stop"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 16
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 26 )
 position = Vector2( 0, 3 )
 texture = ExtResource( 2 )
 hframes = 4
@@ -229,9 +269,15 @@ one_shot = true
 
 [node name="EnemyStat" parent="." instance=ExtResource( 6 )]
 
+[node name="FlashAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Start = SubResource( 27 )
+anims/Stop = SubResource( 28 )
+
 [connection signal="start_invincibility" from="." to="HurtBox" method="_on_Enemy_start_invincibility"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
 [connection signal="invincibility_ended" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_ended"]
+[connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
 [connection signal="invincibility_started" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_started"]
 [connection signal="timeout" from="HurtBox/Timer" to="HurtBox" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
