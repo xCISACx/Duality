@@ -23,6 +23,9 @@ onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var hitbox = $HitBox2/CollisionShape2D
+onready var enemystat = $EnemyStat
+
+signal start_invincibility
 
 var state = IDLE
 
@@ -35,6 +38,7 @@ enum {
 func _ready():
 	$AnimationTree.active = true
 	$"PoundHitBox/CollisionShape2D".disabled = true
+	enemystat.connect("no_health", self, "death")
 
 func _physics_process(delta):		
 	match state:
@@ -79,14 +83,27 @@ func start_wait_timer():
 	$Timer.start()
 	velocity = Vector2.ZERO
 	can_move = false
++<<<<<<< Updated upstream
 	
 
 func _on_Timer_timeout():
+	
+	
+ func _on_Timer_timeout():
 	can_move = true
 	
+=======
+>>>>>>> Stashed changes
+
 func _process(delta):
 	#print($Timer.time_left)
 	pass
 	
+func death():
+	queue_free()
 
 
+func _on_HurtBox_area_entered(area):
+	enemystat.set_health(enemystat.health - area.damage)
+	emit_signal("start_invincibility")
+	print(enemystat.health)
