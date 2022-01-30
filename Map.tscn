@@ -46,39 +46,6 @@ position = Vector2( -142.07, 44.2143 )
 [node name="EnemyMushroom" parent="YSort/Enemies" instance=ExtResource( 7 )]
 position = Vector2( 52, 0 )
 
-[node name="Pickups" type="YSort" parent="YSort"]
-
-[node name="Pickup" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -47.1545, -113.588 )
-
-[node name="Pickup6" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -89, -133 )
-
-[node name="Pickup7" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -88, -99 )
-
-[node name="Pickup8" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -88, -67 )
-
-[node name="Pickup2" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( 123.007, -133.633 )
-type = 1
-
-[node name="Pickup3" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -126.445, -132.742 )
-scale = Vector2( 0.993489, 1.02205 )
-type = 2
-
-[node name="Pickup4" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -128, -99 )
-scale = Vector2( 0.993489, 1.02205 )
-type = 2
-
-[node name="Pickup5" parent="YSort/Pickups" instance=ExtResource( 8 )]
-position = Vector2( -128, -69 )
-scale = Vector2( 0.993489, 1.02205 )
-type = 2
-
 [node name="Trees" type="YSort" parent="YSort"]
 
 [node name="StaticBody2D" parent="YSort/Trees" instance=ExtResource( 4 )]
@@ -86,6 +53,37 @@ position = Vector2( 143, -9 )
 
 [node name="StaticBody2D2" parent="YSort/Trees" instance=ExtResource( 4 )]
 position = Vector2( 126, 45 )
+
+[node name="Pickup" parent="." instance=ExtResource( 8 )]
+position = Vector2( -47.1545, -113.588 )
+
+[node name="Pickup6" parent="." instance=ExtResource( 8 )]
+position = Vector2( -89, -133 )
+
+[node name="Pickup7" parent="." instance=ExtResource( 8 )]
+position = Vector2( -88, -99 )
+
+[node name="Pickup8" parent="." instance=ExtResource( 8 )]
+position = Vector2( -88, -67 )
+
+[node name="Pickup2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 123.007, -133.633 )
+type = 1
+
+[node name="Pickup3" parent="." instance=ExtResource( 8 )]
+position = Vector2( -126.445, -132.742 )
+scale = Vector2( 0.993489, 1.02205 )
+type = 2
+
+[node name="Pickup4" parent="." instance=ExtResource( 8 )]
+position = Vector2( -128, -99 )
+scale = Vector2( 0.993489, 1.02205 )
+type = 2
+
+[node name="Pickup5" parent="." instance=ExtResource( 8 )]
+position = Vector2( -128, -69 )
+scale = Vector2( 0.993489, 1.02205 )
+type = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
