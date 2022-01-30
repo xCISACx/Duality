@@ -18,6 +18,8 @@ func _ready():
 
 func _on_Area2D_body_entered(body):
 	if (body.is_in_group("Player")):
+		$"../../Player".get_node("PowerUpAnimationPlayer").stop(true)
+		$"../../Player".get_node("PowerUpAnimationPlayer").play("PowerUp")
 		match(type):
 			ItemType.HEALTH:
 				queue_free()
@@ -36,15 +38,18 @@ func _on_Area2D_body_entered(body):
 func PickupHealth():
 	print("Picked Up Health")
 	PlayerStats.set_max_health(PlayerStats.max_health + 1)
-	PlayerStats.set_max_speed(PlayerStats.max_speed - 1)	
+	PlayerStats.set_max_speed(PlayerStats.max_speed - 1)
+	$"../../Player".get_node("PowerUpSprites").texture = load("res://health-speed.png")
 
 func PickupStamina():
 	print("Picked Up Stamina")
 	PlayerStats.set_max_stamina(PlayerStats.max_stamina + 1)
 	PlayerStats.set_max_health(PlayerStats.max_health - 1)
+	$"../../Player".get_node("PowerUpSprites").texture = load("res://stamina-health.png")
 
 func PickupSpeed():
 	print("Picked Up Speed")
 	PlayerStats.set_max_speed(PlayerStats.max_speed + 1)
 	PlayerStats.set_max_stamina(PlayerStats.max_stamina - 1)
 	PlayerStats.set_speed(PlayerStats.max_speed)
+	$"../../Player".get_node("PowerUpSprites").texture = load("res://speed-stamina.png")

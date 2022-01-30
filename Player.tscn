@@ -1,9 +1,12 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player-new2.png" type="Texture" id=2]
 [ext_resource path="res://PlayerStats.tscn" type="PackedScene" id=3]
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Audio/attack.wav" type="AudioStream" id=5]
+[ext_resource path="res://Audio/powerup.wav" type="AudioStream" id=6]
+[ext_resource path="res://PowerUpSpriteFrames.tres" type="SpriteFrames" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -19,7 +22,6 @@ radius = 8.0
 [sub_resource type="Animation" id=3]
 resource_name = "Attack Down"
 length = 0.4
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -69,6 +71,20 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+tracks/4/type = "audio"
+tracks/4/path = NodePath("AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0.1 )
 }
 
 [sub_resource type="Animation" id=36]
@@ -124,6 +140,20 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/4/type = "audio"
+tracks/4/path = NodePath("AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0.1 )
+}
 
 [sub_resource type="Animation" id=37]
 resource_name = "Attack Right"
@@ -178,6 +208,20 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/4/type = "audio"
+tracks/4/path = NodePath("AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0.1 )
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "Attack Up"
@@ -231,6 +275,20 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+tracks/4/type = "audio"
+tracks/4/path = NodePath("AudioStreamPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0.1 )
 }
 
 [sub_resource type="Animation" id=57]
@@ -776,6 +834,83 @@ graph_offset = Vector2( -54, -83 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
+[sub_resource type="Animation" id=72]
+resource_name = "PowerUp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PowerUpBackAnimatedSprite:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PowerUpBackAnimatedSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PowerUpFrontAnimatedSprite:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PowerUpFrontAnimatedSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("PowerUpSprites:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/5/type = "audio"
+tracks/5/path = NodePath("PowerUpAudioStreamPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -784,6 +919,13 @@ script = ExtResource( 1 )
 position = Vector2( 0, 14 )
 rotation = -1.5708
 shape = SubResource( 1 )
+
+[node name="PowerUpBackAnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0.5, -2 )
+frames = ExtResource( 7 )
+animation = "PowerUpBack"
+frame = 11
+playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0.5, -4 )
@@ -808,6 +950,7 @@ disabled = true
 
 [node name="HitBoxPivot" type="Position2D" parent="."]
 position = Vector2( 0, 6 )
+rotation = 1.5708
 
 [node name="SwordHitBox" parent="HitBoxPivot" instance=ExtResource( 4 )]
 position = Vector2( -4, -15 )
@@ -860,6 +1003,24 @@ autostart = true
 [node name="StaminaTimeout" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="PowerUpAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="PowerUpFrontAnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0.5, -2 )
+frames = ExtResource( 7 )
+animation = "PowerUpFront"
+frame = 11
+playing = true
+
+[node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/PowerUp = SubResource( 72 )
+
+[node name="PowerUpSprites" type="Sprite" parent="."]
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]

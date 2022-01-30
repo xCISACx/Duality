@@ -46,6 +46,8 @@ func _ready():
 	PlayerStats.connect("no_health", self, "death_state")
 	collsword.disabled = true
 	hurtbox.disabled = false
+	$PowerUpBackAnimatedSprite.visible = false
+	$PowerUpFrontAnimatedSprite.visible = false
 	pass # Replace with function body.
 	
 func move_state(delta):
