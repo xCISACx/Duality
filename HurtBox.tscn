@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://HurtBox.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 7.0
+height = 10.0
+
+[node name="HurtBox" type="Area2D"]
+position = Vector2( 0, -2 )
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 8 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="invincibility_ended" from="." to="." method="_on_HurtBox_invincibility_ended"]
+[connection signal="invincibility_started" from="." to="." method="_on_HurtBox_invincibility_started"]
+[connection signal="something_hit" from="." to="." method="_on_HurtBox_something_hit"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -9,9 +9,10 @@ onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
 onready var swordHitbox = $"HitBoxPivot/SwordHitBox"
 onready var collsword = $"HitBoxPivot/SwordHitBox/CollisionShape2D"
-onready var hurtbox = $"HurtBox/CollisionShape2D"
+onready var hurtbox = $"HurtBox"
 onready var stamina_timer = $StaminaTimer
 onready var stamina_timeout_timer = $StaminaTimeout
+onready var flashAnimationPlayer = $FlashAnimationPlayer
 
 var stats = PlayerStats
 
@@ -25,6 +26,7 @@ enum {
 var state = MOVE
 var velocity = Vector2.ZERO;
 var roll_vector = Vector2.DOWN;
+var knockback = Vector2.ZERO
 
 func _physics_process(delta):
 	match state:
@@ -45,7 +47,7 @@ func _ready():
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
 	PlayerStats.connect("no_health", self, "death_state")
 	collsword.disabled = true
-	hurtbox.disabled = false
+	$HurtBox/CollisionShape2D.disabled = false
 	$PowerUpBackAnimatedSprite.visible = false
 	$PowerUpFrontAnimatedSprite.visible = false
 	pass # Replace with function body.
@@ -121,7 +123,15 @@ func set_max_speed(value):
 
 func _on_HurtBox_area_entered(area):
 	PlayerStats.set_health(PlayerStats.health - area.damage)
-	print(PlayerStats.health)
+	knockback = area.knockback_vector * 120
+	#hurtbox.create_hit_effect()
+	hurtbox.start_invincibility(0.4)
+	
+func _on_HurtBox_invincibility_started():
+	flashAnimationPlayer.play("Start")
+
+func _on_HurtBox_invincibility_ended():
+	flashAnimationPlayer.play("Stop")
 	
 func _on_StaminaTimer_timeout():
 	if (stats.stamina < stats.max_stamina):
@@ -129,4 +139,6 @@ func _on_StaminaTimer_timeout():
 
 func _on_StaminaTimeout_timeout():
 	stamina_timer.start()
+	
+
 	
