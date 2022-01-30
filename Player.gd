@@ -99,9 +99,8 @@ func roll_state():
 	move()
 	
 func attack_state():
-	#velocity = Vector2.ZERO
+	velocity = Vector2.ZERO
 	animation_state.travel("Attack")
-	move()
 
 func death_state():
 	velocity = Vector2.ZERO

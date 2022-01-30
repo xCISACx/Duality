@@ -83,17 +83,10 @@ func start_wait_timer():
 	$Timer.start()
 	velocity = Vector2.ZERO
 	can_move = false
-+<<<<<<< Updated upstream
 	
 
 func _on_Timer_timeout():
-	
-	
- func _on_Timer_timeout():
 	can_move = true
-	
-=======
->>>>>>> Stashed changes
 
 func _process(delta):
 	#print($Timer.time_left)
