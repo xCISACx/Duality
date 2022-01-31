@@ -12,11 +12,13 @@ onready var top_tile_map = $WallTopTileMap
 var player_spawned = false
 var player_spawn_location = Vector2.ZERO
 var portal_spawned
+var enemy_spawn_chance = 0
+var map_size = 250
 
 func _ready():
 	randomize()
 	Variables.root = self
-	BackgroundMusic.get_node("AudioStreamPlayer").play()
+	#BackgroundMusic.get_node("AudioStreamPlayer").play()
 	generate_level()
 	EnemyStats.connect("all_enemies_dead", self, "spawn_portal")
 	pass # Replace with function body.
@@ -27,14 +29,15 @@ func _ready():
 #	pass
 	
 func generate_level():
+	enemy_spawn_chance += 0.025
 	GameManager.enemies_alive = 0
 	var walker = Walker.new(Vector2(19, 11), borders)
-	var map = walker.walk(1000)
+	var map = walker.walk(map_size + 10)
 	walker.queue_free()
 	for location in map:
 		tile_map.set_cellv(location, -1)
 		top_tile_map.set_cellv(location, -1)
-		if randf() <= 0.01:
+		if randf() <= enemy_spawn_chance:
 			generate_enemies(1, tile_map.map_to_world(location))
 			EnemyStats.set_enemy_amount(GameManager.enemies_alive + 1)
 		elif !player_spawned:

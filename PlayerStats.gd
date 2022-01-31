@@ -6,7 +6,7 @@ var health
 var default_max_stamina = 5
 var max_stamina = 5
 var stamina
-var default_max_speed = 5
+var default_max_speed = -5
 var max_speed = 5
 var first_spawn = true
 	
@@ -48,8 +48,9 @@ func set_stamina(value):
 func set_max_speed(value):
 	max_speed = value
 	emit_signal("max_speed_changed", max_speed)
-	if max_speed <= -1:
+	if max_speed <= -1 and BackgroundMusic.get_node("AudioStreamPlayer").stream != load("res://hat.WAV"):
 		emit_signal("moonwalk")
+		print("moonwalk")
 	
 func reset_stats():
 	max_health = default_max_health

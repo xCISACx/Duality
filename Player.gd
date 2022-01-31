@@ -45,14 +45,18 @@ func _physics_process(delta):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if BackgroundMusic.get_node("AudioStreamPlayer").playing != true: 
+		if PlayerStats.max_speed > -1:
+			hat.hide()
+			BackgroundMusic.get_node("AudioStreamPlayer").stream = load("res://bgm.wav")
+			BackgroundMusic.get_node("AudioStreamPlayer").play()
+		else:
+			BackgroundMusic.get_node("AudioStreamPlayer").stream = hat_clip
+			BackgroundMusic.get_node("AudioStreamPlayer").play()
 	if PlayerStats.max_speed > -1:
 		hat.hide()
-		BackgroundMusic.get_node("AudioStreamPlayer").stream = load("res://bgm.wav")
-		BackgroundMusic.get_node("AudioStreamPlayer").play()
 	else:
 		hat.show()
-		BackgroundMusic.get_node("AudioStreamPlayer").stream = hat_clip
-		BackgroundMusic.get_node("AudioStreamPlayer").play()
 	set_max_speed(PlayerStats.max_speed)
 	PlayerStats.set_max_health(PlayerStats.max_health)
 	PlayerStats.set_health(PlayerStats.health)
