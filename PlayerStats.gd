@@ -6,7 +6,7 @@ var health
 var default_max_stamina = 5
 var max_stamina = 5
 var stamina
-var default_max_speed = -5
+var default_max_speed = 5
 var max_speed = 5
 var first_spawn = true
 	
