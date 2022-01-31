@@ -160,4 +160,7 @@ func _on_StaminaTimeout_timeout():
 func show_hat():
 	hat.visible = true
 	BackgroundMusic.get_node("AudioStreamPlayer").stream = hat_clip
-	BackgroundMusic.get_node("AudioStreamPlayer").play()
+	if !BackgroundMusic.get_node("AudioStreamPlayer").is_playing():
+		BackgroundMusic.get_node("AudioStreamPlayer").play()
+	else:
+		print("already playing")
