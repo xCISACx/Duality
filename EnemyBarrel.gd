@@ -64,6 +64,7 @@ func _physics_process(delta):
 					state = IDLE	
 				
 	velocity = move_and_slide(velocity)
+	print(String(PlayerStats.max_speed))
 			
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
@@ -95,7 +96,7 @@ func _process(delta):
 	
 func death():
 	var enemydrop = pickup.instance()
-	var randomint = randi() % 2
+	var randomint = randi() % 3
 	match (randomint):
 		0:
 			enemydrop.type = 0
@@ -106,13 +107,14 @@ func death():
 	
 	Variables.root.add_child(enemydrop)
 	enemydrop.position = global_position
+	EnemyStats.set_enemy_amount(GameManager.enemies_alive - 1)
 	queue_free()
 
 func _on_HurtBox_area_entered(area):
 	enemystat.set_health(enemystat.health - area.damage)
 	emit_signal("start_invincibility")
 	$HurtBox.start_invincibility(0.4)
-	print(enemystat.health)
+	#print(enemystat.health)
 
 func _on_HurtBox_invincibility_started():
 	flashAnimationPlayer.play("Start")

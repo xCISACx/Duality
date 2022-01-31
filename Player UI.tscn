@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Health UI.gd" type="Script" id=1]
 [ext_resource path="res://UI/Sprites/speed_empty.png" type="Texture" id=2]
@@ -7,10 +7,11 @@
 [ext_resource path="res://UI/Sprites/bolt.png" type="Texture" id=5]
 [ext_resource path="res://UI/Sprites/heart_empty.png" type="Texture" id=6]
 [ext_resource path="res://UI/Sprites/heart.png" type="Texture" id=7]
+[ext_resource path="res://enemy_icon.png" type="Texture" id=8]
 
 [node name="Player UI" type="Control"]
-margin_right = 59.0
-margin_bottom = 11.0
+margin_right = 319.0
+margin_bottom = 181.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -48,6 +49,7 @@ margin_right = 76.0
 margin_bottom = 27.0
 rect_scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 4 )
+expand = true
 stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -67,12 +69,14 @@ __meta__ = {
 }
 
 [node name="SpeedUIEmpty" type="TextureRect" parent="."]
+visible = false
 margin_left = 1.0
 margin_top = 22.0
 margin_right = 76.0
 margin_bottom = 37.0
 rect_scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 2 )
+expand = true
 stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -87,6 +91,30 @@ rect_scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyAmountLabel" type="Label" parent="."]
+margin_left = 294.0
+margin_top = 3.0
+margin_right = 317.0
+margin_bottom = 17.0
+size_flags_vertical = 8
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -42.0
+margin_top = 1.0
+margin_right = -27.0
+margin_bottom = 16.0
+texture = ExtResource( 8 )
+flip_h = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

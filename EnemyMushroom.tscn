@@ -10,6 +10,7 @@
 [ext_resource path="res://FlashShader.gdshader" type="Shader" id=8]
 
 [sub_resource type="ShaderMaterial" id=26]
+resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/active = false
 
@@ -279,6 +280,7 @@ anims/Stop = SubResource( 28 )
 [connection signal="invincibility_ended" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_ended"]
 [connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
 [connection signal="invincibility_started" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_started"]
+[connection signal="something_hit" from="HurtBox" to="." method="_on_HurtBox_something_hit"]
 [connection signal="timeout" from="HurtBox/Timer" to="HurtBox" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]

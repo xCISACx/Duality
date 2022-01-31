@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export var ACCELERATION = 500
 export var MAX_SPEED = 80
-export var ROLL_SPEED = 120
+export var ROLL_SPEED = 160
 export var FRICTION = 500
 
 onready var animation_tree = $AnimationTree
@@ -13,6 +13,8 @@ onready var hurtbox = $"HurtBox"
 onready var stamina_timer = $StaminaTimer
 onready var stamina_timeout_timer = $StaminaTimeout
 onready var flashAnimationPlayer = $FlashAnimationPlayer
+onready var hat = $InconspicousHat
+onready var hat_clip = load("res://hat.WAV")
 
 var stats = PlayerStats
 
@@ -38,16 +40,28 @@ func _physics_process(delta):
 			attack_state()
 		DEATH:
 			death_state()
-	print("invincible: " + String($HurtBox.invincible))
+	#print("invincible: " + String($HurtBox.invincible))
 		
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if PlayerStats.max_speed > -1:
+		hat.hide()
+		BackgroundMusic.get_node("AudioStreamPlayer").stream = load("res://bgm.wav")
+		BackgroundMusic.get_node("AudioStreamPlayer").play()
+	else:
+		hat.show()
+		BackgroundMusic.get_node("AudioStreamPlayer").stream = hat_clip
+		BackgroundMusic.get_node("AudioStreamPlayer").play()
+	set_max_speed(PlayerStats.max_speed)
+	PlayerStats.set_max_health(PlayerStats.max_health)
+	PlayerStats.set_health(PlayerStats.health)
 	Variables.player = self
 	randomize()
 	animation_tree.active = true
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
 	PlayerStats.connect("no_health", self, "death_state")
+	PlayerStats.connect("moonwalk", self, "show_hat")
 	collsword.disabled = true
 	$HurtBox/CollisionShape2D.disabled = false
 	$PowerUpBackAnimatedSprite.visible = false
@@ -128,7 +142,7 @@ func _on_HurtBox_area_entered(area):
 	knockback = area.knockback_vector * 120
 	#hurtbox.create_hit_effect()
 	hurtbox.start_invincibility(0.4)
-	print(PlayerStats.health)
+	#print(PlayerStats.health)
 	
 func _on_HurtBox_invincibility_started():
 	flashAnimationPlayer.play("Start")
@@ -143,5 +157,7 @@ func _on_StaminaTimer_timeout():
 func _on_StaminaTimeout_timeout():
 	stamina_timer.start()
 	
-
-	
+func show_hat():
+	hat.visible = true
+	BackgroundMusic.get_node("AudioStreamPlayer").stream = hat_clip
+	BackgroundMusic.get_node("AudioStreamPlayer").play()

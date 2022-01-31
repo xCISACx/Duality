@@ -92,7 +92,7 @@ func _physics_process(delta):
 			if reset_timer.time_left <= .35 and reset_timer.time_left > .15:
 				shoot_timer.stop()
 				state = CHASE
-			print("attacking")
+			#print("attacking")
 			if raycast_for_player() or global_position.distance_to(player.position) < 10:
 				reset_timer.start()
 				if shoot_timer.is_stopped():
@@ -107,10 +107,11 @@ func _physics_process(delta):
 				
 				
 	velocity = move_and_slide(velocity)
-	print(reset_timer.time_left)
-	print(state)
+	#print(reset_timer.time_left)
+	#print(state)
 	if player:
-		print(raycast_for_player())
+		#print(raycast_for_player())
+		pass
 			
 			
 func shoot_towards(direction):
@@ -157,7 +158,7 @@ func raycast_for_player() -> bool:
 	return false
 	
 func _on_reset_timer_timeout():
-	print("set player to null")
+	#print("set player to null")
 	playerDetectionZone.player = null
 	player = null
 
@@ -167,7 +168,7 @@ func _on_ShootingTimer_timeout():
 	
 func death():
 	var enemydrop = pickup.instance()
-	var randomint = randi() % 2
+	var randomint = randi() % 3
 	match (randomint):
 		0:
 			enemydrop.type = 0
@@ -175,18 +176,20 @@ func death():
 			enemydrop.type = 1
 		2:
 			enemydrop.type = 2
+			
 	Variables.root.add_child(enemydrop)
 	enemydrop.position = global_position
+	EnemyStats.set_enemy_amount(GameManager.enemies_alive - 1)
 	queue_free()
 	
 func _on_HurtBox_area_entered(area):
 	enemystat.set_health(enemystat.health - area.damage)
 	emit_signal("start_invincibility")
 	$HurtBox.start_invincibility(0.4)
-	print(enemystat.health)
+	#print("enemy health: " + String(enemystat.health))
 	
 func _on_HurtBox_invincibility_started():
-	flashAnimationPlayer.play("Start")
+	self.flashAnimationPlayer.play("Start")
 
 func _on_HurtBox_invincibility_ended():
-	flashAnimationPlayer.play("Stop")
+	self.flashAnimationPlayer.play("Stop")

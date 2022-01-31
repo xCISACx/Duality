@@ -47,6 +47,7 @@ visible = true
 margin_left = 40.0
 margin_right = 282.0
 margin_bottom = 179.0
+popup_exclusive = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -119,7 +120,7 @@ text = "CONTROLS"
 [node name="SettingsContainer" type="VBoxContainer" parent="SettingsMenu/Menu"]
 margin_top = 30.0
 margin_right = 224.0
-margin_bottom = 84.0
+margin_bottom = 272.0
 size_flags_vertical = 0
 
 [node name="VideoSettings" type="GridContainer" parent="SettingsMenu/Menu/SettingsContainer"]
@@ -168,9 +169,9 @@ theme = ExtResource( 3 )
 text = "APPLY"
 
 [node name="AudioSettings" type="GridContainer" parent="SettingsMenu/Menu/SettingsContainer"]
-visible = false
+margin_top = 58.0
 margin_right = 224.0
-margin_bottom = 112.0
+margin_bottom = 170.0
 columns = 4
 
 [node name="Master" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
@@ -183,7 +184,7 @@ text = "Master"
 
 [node name="MasterSlider" type="HSlider" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
 margin_left = 61.0
-margin_right = 146.0
+margin_right = 118.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -192,9 +193,9 @@ step = 0.05
 value = 1.0
 
 [node name="MasterValue" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
-margin_left = 151.628
+margin_left = 122.0
 margin_top = 1.0
-margin_right = 172.628
+margin_right = 143.0
 margin_bottom = 15.0
 size_flags_horizontal = 8
 text = "100"
@@ -221,7 +222,7 @@ text = "BGM"
 [node name="BGMSlider" type="HSlider" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
 margin_left = 61.0
 margin_top = 34.0
-margin_right = 146.0
+margin_right = 118.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -230,20 +231,17 @@ step = 0.05
 value = 1.0
 
 [node name="BGMValue" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
-margin_left = 151.628
+margin_left = 122.0
 margin_top = 35.0
-margin_right = 172.628
+margin_right = 143.0
 margin_bottom = 49.0
 text = "100"
 
 [node name="BGMTestButton" type="CheckButton" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
-anchor_top = 0.0446429
-anchor_bottom = 0.0446429
-margin_left = 174.75
+margin_left = 147.0
 margin_top = 20.0
-margin_right = 250.75
+margin_right = 223.0
 margin_bottom = 64.0
-rect_scale = Vector2( 0.7, 0.7 )
 rect_clip_content = true
 size_flags_horizontal = 8
 size_flags_vertical = 6
@@ -270,7 +268,7 @@ __meta__ = {
 [node name="SFXSlider" type="HSlider" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
 margin_left = 61.0
 margin_top = 82.0
-margin_right = 146.0
+margin_right = 118.0
 margin_bottom = 98.0
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -282,9 +280,9 @@ __meta__ = {
 }
 
 [node name="SFXValue" type="Label" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
-margin_left = 151.628
+margin_left = 122.0
 margin_top = 83.0
-margin_right = 172.628
+margin_right = 143.0
 margin_bottom = 97.0
 text = "100"
 __meta__ = {
@@ -292,13 +290,10 @@ __meta__ = {
 }
 
 [node name="SFXTestButton" type="CheckButton" parent="SettingsMenu/Menu/SettingsContainer/AudioSettings"]
-anchor_top = 0.0446429
-anchor_bottom = 0.0446429
-margin_left = 174.75
+margin_left = 147.0
 margin_top = 68.0
-margin_right = 250.75
+margin_right = 223.0
 margin_bottom = 112.0
-rect_scale = Vector2( 0.7, 0.7 )
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme = ExtResource( 3 )
@@ -309,10 +304,9 @@ stream = ExtResource( 4 )
 bus = "SFX"
 
 [node name="ControlSettings" type="GridContainer" parent="SettingsMenu/Menu/SettingsContainer"]
-visible = false
-margin_top = 52.0
+margin_top = 174.0
 margin_right = 224.0
-margin_bottom = 120.0
+margin_bottom = 242.0
 columns = 2
 
 [node name="MovementLabel" type="Label" parent="SettingsMenu/Menu/SettingsContainer/ControlSettings"]
@@ -392,8 +386,8 @@ __meta__ = {
 [connection signal="pressed" from="SettingsMenu/Menu/ButtonContainer/AudioButton" to="." method="_on_AudioButton_pressed"]
 [connection signal="pressed" from="SettingsMenu/Menu/ButtonContainer/ControlsButton" to="." method="_on_ControlsButton_pressed"]
 [connection signal="toggled" from="SettingsMenu/Menu/SettingsContainer/VideoSettings/FullscreenCheckBox" to="." method="_on_FullscreenCheckBox_toggled"]
-[connection signal="item_selected" from="SettingsMenu/Menu/SettingsContainer/VideoSettings/VideoOptionsButton" to="." method="_on_VideoOptionButton_item_selected"]
 [connection signal="item_selected" from="SettingsMenu/Menu/SettingsContainer/VideoSettings/VideoOptionsButton" to="." method="_on_VideoOptionsButton_item_selected"]
+[connection signal="item_selected" from="SettingsMenu/Menu/SettingsContainer/VideoSettings/VideoOptionsButton" to="." method="_on_VideoOptionButton_item_selected"]
 [connection signal="pressed" from="SettingsMenu/Menu/SettingsContainer/VideoSettings/ApplyButton" to="." method="_on_ApplyButton_pressed"]
 [connection signal="value_changed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/MasterSlider" to="." method="_on_MasterSlider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/Menu/SettingsContainer/AudioSettings/BGMSlider" to="." method="_on_BGMSlider_value_changed"]

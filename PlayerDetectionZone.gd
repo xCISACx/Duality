@@ -8,7 +8,7 @@ func can_see_player():
 
 func _on_PlayerDetectionZone_body_entered(body):
 	player = body
-	print("entered")
+	#print("entered")
 
 func _physics_process(delta):
 	var pos = global_position

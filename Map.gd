@@ -6,14 +6,19 @@ const barrel = preload("res://EnemyBarrel.tscn")
 const mushroom = preload("res://EnemyMushroom.tscn")
 const player = preload("res://Player.tscn")
 const tree = preload("res://Tree.tscn")
-onready var tile_map = $TileMap
+const portal = preload("res://Portal.tscn")
+onready var tile_map = $WallTileMap
+onready var top_tile_map = $WallTopTileMap
 var player_spawned = false
+var player_spawn_location = Vector2.ZERO
+var portal_spawned
 
 func _ready():
 	randomize()
 	Variables.root = self
 	BackgroundMusic.get_node("AudioStreamPlayer").play()
 	generate_level()
+	EnemyStats.connect("all_enemies_dead", self, "spawn_portal")
 	pass # Replace with function body.
 
 
@@ -22,16 +27,21 @@ func _ready():
 #	pass
 	
 func generate_level():
+	GameManager.enemies_alive = 0
 	var walker = Walker.new(Vector2(19, 11), borders)
 	var map = walker.walk(1000)
 	walker.queue_free()
 	for location in map:
 		tile_map.set_cellv(location, -1)
-		if randf() <= 0.05:
+		top_tile_map.set_cellv(location, -1)
+		if randf() <= 0.01:
 			generate_enemies(1, tile_map.map_to_world(location))
+			EnemyStats.set_enemy_amount(GameManager.enemies_alive + 1)
 		elif !player_spawned:
 			spawn_player(tile_map.map_to_world(location))
+			player_spawn_location = location
 	tile_map.update_bitmask_region(borders.position, borders.end)
+	top_tile_map.update_bitmask_region(borders.position, borders.end)
 		
 func generate_enemies(enemy_amount, location):
 		if randf() < .5:
@@ -49,3 +59,11 @@ func spawn_player(location):
 	playerc.global_position = location
 	player_spawned = true
 	pass
+	
+func spawn_portal():
+	print("spawned portal")
+	var portalc = portal.instance()
+	add_child(portalc)
+	var portal_location = player_spawn_location
+	portalc.global_position = tile_map.map_to_world(portal_location)
+	portal_spawned = true

@@ -62,5 +62,11 @@ func PickupSpeed():
 	print("Picked Up Speed")
 	PlayerStats.set_max_speed(PlayerStats.max_speed + 1)
 	PlayerStats.set_max_stamina(PlayerStats.max_stamina - 1)
-	PlayerStats.set_speed(PlayerStats.max_speed)
+	PlayerStats.set_max_speed(PlayerStats.max_speed)
 	player.get_node("PowerUpSprites").texture = load("res://speed-stamina.png")
+
+
+func _on_Area2D_body_exited(body):
+	if (body.is_in_group("Player")):
+		player_in_range = false
+	pass # Replace with function body.

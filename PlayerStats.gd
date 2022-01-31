@@ -1,26 +1,29 @@
 extends Node2D
 
+var default_max_health = 5	
 var max_health = 5
 var health
+var default_max_stamina = 5
 var max_stamina = 5
 var stamina
+var default_max_speed = 5
 var max_speed = 5
-var speed
+var first_spawn = true
 	
 signal no_health
+signal moonwalk
 signal health_changed(value)
 signal max_health_changed(value)
 
 signal stamina_changed(value)
 signal max_stamina_changed(value)
 
-signal speed_changed(value)
 signal max_speed_changed(value)
 
 func _ready():
 	self.health = max_health
 	self.stamina = max_stamina
-	self.speed = max_speed
+	self.max_speed = max_speed
 
 func set_max_health(value):
 	max_health = value
@@ -44,9 +47,18 @@ func set_stamina(value):
 
 func set_max_speed(value):
 	max_speed = value
-	self.speed = min(speed, max_speed)
 	emit_signal("max_speed_changed", max_speed)
+	if max_speed <= -1:
+		emit_signal("moonwalk")
 	
-func set_speed(value):
-	speed = value
-	emit_signal("speed_changed", speed)
+func reset_stats():
+	max_health = default_max_health
+	health = default_max_health
+	max_stamina = default_max_stamina
+	stamina = default_max_stamina
+	max_speed = default_max_speed
+	emit_signal("health_changed", health)
+	emit_signal("max_health_changed", max_health)
+	emit_signal("stamina_changed", stamina)
+	emit_signal("max_stamina_changed", max_stamina)
+	emit_signal("max_speed_changed", max_speed)

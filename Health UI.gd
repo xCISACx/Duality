@@ -6,7 +6,7 @@ var max_hearts = 5 setget set_max_hearts
 var stamina_icons = 5 setget set_stamina
 var max_stamina = 5 setget set_max_stamina
 
-var speed_icons = 5 setget set_speed
+var speed_icons = 5
 var max_speed = 5 setget set_max_speed
 
 onready var heartUIFull = $HeartUIFull
@@ -15,6 +15,7 @@ onready var staminaUIFull = $StaminaUIFull
 onready var staminaUIEmpty = $StaminaUIEmpty
 onready var speedUIFull = $SpeedUIFull
 onready var speedUIEmpty = $SpeedUIEmpty
+onready var enemyAmountLabel = $EnemyAmountLabel
 
 func set_hearts(value):
 	hearts = clamp(value, 0, max_hearts)
@@ -25,11 +26,6 @@ func set_stamina(value):
 	stamina_icons = clamp(value, 0, max_stamina)
 	if staminaUIFull:
 		staminaUIFull.rect_size.x = stamina_icons * 15
-		
-func set_speed(value):
-	speed_icons = clamp(value, 0, max_speed)
-	if speedUIFull:
-		speedUIFull.rect_size.x = speed_icons * 15
 	
 func set_max_hearts(value):
 	max_hearts = max(value, 1)
@@ -44,10 +40,13 @@ func set_max_stamina(value):
 		staminaUIEmpty.rect_size.x = max_stamina * 15
 		
 func set_max_speed(value):
-	max_speed = max(value, 1)
-	self.speed_icons = min(speed_icons, max_speed)
-	if speedUIEmpty:
-		speedUIEmpty.rect_size.x = max_speed * 15
+	max_speed = clamp(value, -1, max_speed)
+	max_speed = max(value, -1)
+	if speedUIFull:
+		speedUIFull.rect_size.x = max_speed * 15
+		
+func set_enemy_amount(value):
+	enemyAmountLabel.text = String(value)
 	
 func _ready():
 	self.max_hearts = PlayerStats.max_health
@@ -55,11 +54,11 @@ func _ready():
 	self.max_stamina = PlayerStats.max_stamina
 	self.stamina_icons = PlayerStats.stamina
 	self.max_speed = PlayerStats.max_speed
-	self.speed_icons = PlayerStats.speed
+	self.enemyAmountLabel.text = String(GameManager.enemies_alive)
+	
 	PlayerStats.connect("health_changed", self, "set_hearts")
 	PlayerStats.connect("max_health_changed", self, "set_max_hearts")
 	PlayerStats.connect("stamina_changed", self, "set_stamina")
 	PlayerStats.connect("max_stamina_changed", self, "set_max_stamina")
-	PlayerStats.connect("speed_changed", self, "set_speed")
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
-	
+	EnemyStats.connect("enemy_amount_changed", self, "set_enemy_amount")

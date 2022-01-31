@@ -1,22 +1,20 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://EnemyBarrel.gd" type="Script" id=1]
 [ext_resource path="res://barrel-sheet.png" type="Texture" id=2]
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=4]
-[ext_resource path="res://HurtBox.gd" type="Script" id=5]
 [ext_resource path="res://EnemyStat.tscn" type="PackedScene" id=6]
 [ext_resource path="res://FlashShader.gdshader" type="Shader" id=7]
+[ext_resource path="res://HurtBox.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ShaderMaterial" id=21]
+resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/active = false
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
-height = 4.0
-
-[sub_resource type="CapsuleShape2D" id=2]
 height = 4.0
 
 [sub_resource type="CapsuleShape2D" id=19]
@@ -285,20 +283,18 @@ hframes = 19
 frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 8 )
 rotation = -1.5708
 shape = SubResource( 1 )
 
-[node name="HurtBox" type="Area2D" parent="."]
+[node name="HurtBox" parent="." instance=ExtResource( 8 )]
+position = Vector2( 0, 0 )
 collision_layer = 8
-collision_mask = 0
-script = ExtResource( 5 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 0, 1 )
-shape = SubResource( 2 )
-
-[node name="Timer" type="Timer" parent="HurtBox"]
+disabled = false
 
 [node name="HitBox" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 1 )
@@ -349,15 +345,14 @@ disabled = true
 anims/Start = SubResource( 22 )
 anims/Stop = SubResource( 23 )
 
+[connection signal="start_invincibility" from="." to="HurtBox" method="_on_Enemy_start_invincibility"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
-[connection signal="invincibility_ended" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_ended"]
 [connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
-[connection signal="invincibility_started" from="HurtBox" to="HurtBox" method="_on_HurtBox_invincibility_started"]
-[connection signal="timeout" from="HurtBox/Timer" to="HurtBox" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]
 [connection signal="timeout" from="PoundTimer" to="." method="_on_Timer_timeout"]
 
+[editable path="HurtBox"]
 [editable path="HitBox"]
 [editable path="PoundHitBox"]

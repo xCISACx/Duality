@@ -23,6 +23,8 @@ var testing = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	BackgroundMusic.get_node("AudioStreamPlayer").stop()
+	settingsMenu.hide()
 	pass
 
 
@@ -36,6 +38,7 @@ func hide_settings():
 	controlsSettings.hide()
 
 func _on_StartButton_pressed():
+	PlayerStats.reset_stats()
 	get_tree().change_scene("res://Main.tscn")
 
 
@@ -51,19 +54,16 @@ func _on_QuitButton_pressed():
 
 
 func _on_VideoButton_pressed():
-	print("a")
 	hide_settings()
 	videoSettings.show()
 
 
 func _on_AudioButton_pressed():
-	print("b")
 	hide_settings()
 	audioSettings.show()
 
 
 func _on_ControlsButton_pressed():
-	print("c")
 	hide_settings()
 	controlsSettings.show()
 
@@ -129,7 +129,7 @@ var _settings := {resolution = Vector2(1280, 720), fullscreen = false, vsync = f
 # Emit the `apply_button_pressed` signal, when user presses the button.
 func _on_ApplyButton_pressed() -> void:
 	# Send the last selected settings with the signal
-	print("apply")
+	#print("apply")
 	emit_signal("apply_button_pressed", _settings)
 	update_settings(_settings)
 

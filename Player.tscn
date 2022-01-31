@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player-new2.png" type="Texture" id=2]
-[ext_resource path="res://PlayerStats.tscn" type="PackedScene" id=3]
+[ext_resource path="res://mj_hat.png" type="Texture" id=3]
 [ext_resource path="res://HitBox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Audio/attack.wav" type="AudioStream" id=5]
 [ext_resource path="res://Audio/powerup.wav" type="AudioStream" id=6]
@@ -961,7 +961,7 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpBack"
-frame = 6
+frame = 13
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -977,13 +977,13 @@ frame = 84
 current = true
 
 [node name="HurtBox" parent="." instance=ExtResource( 8 )]
+visible = false
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 disabled = false
 
 [node name="HitBoxPivot" type="Position2D" parent="."]
 position = Vector2( 0, 6 )
-rotation = 1.5708
 
 [node name="SwordHitBox" parent="HitBoxPivot" instance=ExtResource( 4 )]
 position = Vector2( -4, -15 )
@@ -994,8 +994,6 @@ position = Vector2( 4, 31 )
 rotation = 1.5708
 shape = SubResource( 71 )
 disabled = true
-
-[node name="PlayerStats" parent="." instance=ExtResource( 3 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/Attack Down" = SubResource( 3 )
@@ -1027,7 +1025,7 @@ parameters/playback = SubResource( 14 )
 parameters/Attack/blend_position = Vector2( 0, 0 )
 parameters/Death/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
-parameters/Roll/blend_position = Vector2( 0, 0 )
+parameters/Roll/blend_position = Vector2( -1, 0.00613499 )
 parameters/Walk/blend_position = Vector2( 0, 0 )
 
 [node name="StaminaTimer" type="Timer" parent="."]
@@ -1049,7 +1047,7 @@ bus = "SFX"
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpFront"
-frame = 6
+frame = 13
 playing = true
 
 [node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -1060,6 +1058,13 @@ anims/PowerUp = SubResource( 72 )
 [node name="FlashAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Start = SubResource( 75 )
 anims/Stop = SubResource( 76 )
+
+[node name="InconspicousHat" type="Sprite" parent="."]
+visible = false
+position = Vector2( -1, -8 )
+texture = ExtResource( 3 )
+
+[node name="HatAudioPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
