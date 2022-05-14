@@ -234,13 +234,13 @@ shape = SubResource( 3 )
 [node name="HitBox" parent="." instance=ExtResource( 5 )]
 visible = false
 collision_layer = 16
-collision_mask = 5
 damage = 0
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 visible = false
 position = Vector2( 0, 4 )
 shape = SubResource( 13 )
+disabled = true
 
 [node name="WanderController" parent="." instance=ExtResource( 3 )]
 

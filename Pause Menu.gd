@@ -3,6 +3,7 @@ extends Control
 onready var menu = $Menu
 onready var paused = get_tree().paused
 onready var open = false
+signal unpaused
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,6 +24,7 @@ func pause():
 	
 func unpause():
 	get_tree().paused = false
+	emit_signal("unpaused")
 	menu.hide()
 	
 func _on_ReturnToGameButton_pressed():
@@ -31,3 +33,8 @@ func _on_ReturnToGameButton_pressed():
 func _on_Quit_ToMenuButton_pressed():
 	unpause()
 	get_tree().change_scene_to(load('res://MainMenu.tscn'))
+
+func _on_RestartGameButton_pressed():
+	unpause()
+	PlayerStats.reset_stats()
+	get_tree().reload_current_scene()

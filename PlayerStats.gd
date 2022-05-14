@@ -1,6 +1,6 @@
 extends Node2D
 
-var default_max_health = 5	
+var default_max_health = 5
 var max_health = 5
 var health
 var default_max_stamina = 5
@@ -63,3 +63,5 @@ func reset_stats():
 	emit_signal("stamina_changed", stamina)
 	emit_signal("max_stamina_changed", max_stamina)
 	emit_signal("max_speed_changed", max_speed)
+	GameManager.cleared_floors = 0
+	GameManager.total_enemies_slain = 0

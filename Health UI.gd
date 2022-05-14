@@ -16,6 +16,7 @@ onready var staminaUIEmpty = $StaminaUIEmpty
 onready var speedUIFull = $SpeedUIFull
 onready var speedUIEmpty = $SpeedUIEmpty
 onready var enemyAmountLabel = $EnemyAmountLabel
+onready var floorCountLabel = $FloorCountLabel
 
 func set_hearts(value):
 	hearts = clamp(value, 0, max_hearts)
@@ -55,6 +56,7 @@ func _ready():
 	self.stamina_icons = PlayerStats.stamina
 	self.max_speed = PlayerStats.max_speed
 	self.enemyAmountLabel.text = String(GameManager.enemies_alive)
+	self.floorCountLabel.text = String(GameManager.cleared_floors)
 	
 	PlayerStats.connect("health_changed", self, "set_hearts")
 	PlayerStats.connect("max_health_changed", self, "set_max_hearts")

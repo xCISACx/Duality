@@ -8,9 +8,6 @@
 
 [node name="StartMenu" type="Control"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MainMenu" type="VBoxContainer" parent="."]
 margin_left = 40.0

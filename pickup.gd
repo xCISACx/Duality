@@ -1,7 +1,7 @@
 extends Node2D
 
 enum ItemType {HEALTH,STAMINA,SPEED}
-export (ItemType) var type	
+export (ItemType) var type
 var player_in_range = false
 onready var player = Variables.player
 

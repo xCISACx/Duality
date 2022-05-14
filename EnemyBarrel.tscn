@@ -301,6 +301,7 @@ position = Vector2( 0, 1 )
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource( 19 )
+disabled = true
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
 visible = false
@@ -349,9 +350,11 @@ anims/Stop = SubResource( 23 )
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
 [connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
 [connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]
 [connection signal="timeout" from="PoundTimer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="PoundHitBox" to="." method="_on_PoundHitBox_area_entered"]
 
 [editable path="HurtBox"]
 [editable path="HitBox"]

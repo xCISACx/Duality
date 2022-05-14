@@ -79,7 +79,8 @@ func _physics_process(delta):
 						reset_timer.start() #stop the player reset timer
 						state = ATTACK
 				else:
-					accelerate_towards_point(player.global_position, delta)
+					var dir_to_player = global_position.direction_to(player.global_position)
+					accelerate_towards_point(player.global_position - (dir_to_player * 60), delta)
 						
 			else:
 				seek_player()
@@ -180,6 +181,7 @@ func death():
 	Variables.root.add_child(enemydrop)
 	enemydrop.position = global_position
 	EnemyStats.set_enemy_amount(GameManager.enemies_alive - 1)
+	GameManager.total_enemies_slain = GameManager.total_enemies_slain + 1
 	queue_free()
 	
 func _on_HurtBox_area_entered(area):

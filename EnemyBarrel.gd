@@ -56,7 +56,8 @@ func _physics_process(delta):
 			#print("chase")
 			
 			if player != null and can_move:
-				accelerate_towards_point(player.global_position, delta)
+				var dir_to_player = global_position.direction_to(player.global_position)
+				accelerate_towards_point(player.global_position - (dir_to_player * 25), delta)
 				#print("go to player")
 			elif player == null and can_move:
 				accelerate_towards_point(last_position, delta)
@@ -64,7 +65,7 @@ func _physics_process(delta):
 					state = IDLE	
 				
 	velocity = move_and_slide(velocity)
-	print(String(PlayerStats.max_speed))
+	#print(String(PlayerStats.max_speed))
 			
 func accelerate_towards_point(point, delta):
 	var direction = global_position.direction_to(point)
@@ -108,6 +109,7 @@ func death():
 	Variables.root.add_child(enemydrop)
 	enemydrop.position = global_position
 	EnemyStats.set_enemy_amount(GameManager.enemies_alive - 1)
+	GameManager.total_enemies_slain = GameManager.total_enemies_slain + 1
 	queue_free()
 
 func _on_HurtBox_area_entered(area):
@@ -121,3 +123,11 @@ func _on_HurtBox_invincibility_started():
 
 func _on_HurtBox_invincibility_ended():
 	flashAnimationPlayer.play("Stop")
+
+#func _on_PoundHitBox_area_entered(area):
+#	if area.is_in_group("PlayerShield"):
+#		print("enemy hit shield")
+#		$PoundHitBox.damage = 0
+#	elif area.is_in_group("PlayerHurtbox"):
+#		print("enemy hit player")
+#		$PoundHitBox.damage = 1

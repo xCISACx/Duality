@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Map.gd" type="Script" id=1]
 [ext_resource path="res://CliffTileset.tres" type="TileSet" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Player UI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Pause Menu.gd" type="Script" id=6]
 [ext_resource path="res://UITheme.tres" type="Theme" id=7]
+[ext_resource path="res://enemy_icon.png" type="Texture" id=8]
+[ext_resource path="res://floor-icon.png" type="Texture" id=9]
+[ext_resource path="res://Death UI.gd" type="Script" id=10]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -50,9 +53,6 @@ pause_mode = 2
 margin_right = 319.0
 margin_bottom = 184.0
 script = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Menu" type="Control" parent="CanvasLayer/Pause Menu"]
 visible = false
@@ -94,7 +94,138 @@ margin_bottom = 26.0
 theme = ExtResource( 7 )
 text = "RETURN TO GAME"
 
+[node name="RestartGameButton" type="Button" parent="CanvasLayer/Pause Menu/Menu/VBoxContainer"]
+margin_top = 30.0
+margin_right = 162.0
+margin_bottom = 56.0
+theme = ExtResource( 7 )
+text = "RESTART GAME"
+
 [node name="Quit ToMenuButton" type="Button" parent="CanvasLayer/Pause Menu/Menu/VBoxContainer"]
+margin_top = 60.0
+margin_right = 162.0
+margin_bottom = 86.0
+theme = ExtResource( 7 )
+text = "QUIT TO MENU"
+
+[node name="Death UI" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+process_priority = 15
+margin_right = 319.0
+margin_bottom = 184.0
+script = ExtResource( 10 )
+
+[node name="UI" type="Control" parent="CanvasLayer/Death UI"]
+visible = false
+margin_right = 318.0
+margin_bottom = 180.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Death UI/UI"]
+modulate = Color( 1, 1, 1, 0.843137 )
+margin_right = 320.0
+margin_bottom = 183.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Death UI/UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -56.5
+margin_top = 18.0
+margin_right = 0.5
+margin_bottom = 32.0
+rect_scale = Vector2( 2, 2 )
+text = "YOU DIED!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="GridContainer" parent="CanvasLayer/Death UI/UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -90.0
+margin_top = -38.0
+margin_right = 70.0
+margin_bottom = 2.0
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Death UI/UI/VBoxContainer2"]
+margin_right = 27.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture = ExtResource( 8 )
+stretch_mode = 3
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer/Death UI/UI/VBoxContainer2"]
+margin_left = 31.0
+margin_right = 135.0
+margin_bottom = 18.0
+size_flags_vertical = 3
+text = "ENEMIES SLAIN: "
+align = 1
+valign = 1
+
+[node name="EnemiesSlainAmount" type="Label" parent="CanvasLayer/Death UI/UI/VBoxContainer2"]
+margin_left = 139.0
+margin_right = 160.0
+margin_bottom = 18.0
+size_flags_vertical = 1
+text = "100"
+align = 1
+valign = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Death UI/UI/VBoxContainer2"]
+margin_top = 22.0
+margin_right = 15.0
+margin_bottom = 37.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+texture = ExtResource( 9 )
+stretch_mode = 4
+flip_h = true
+
+[node name="Label3" type="Label" parent="CanvasLayer/Death UI/UI/VBoxContainer2"]
+margin_left = 31.0
+margin_top = 22.0
+margin_right = 135.0
+margin_bottom = 40.0
+size_flags_vertical = 3
+text = "FLOORS CLEARED: "
+align = 1
+valign = 1
+
+[node name="FloorsClearedAmount" type="Label" parent="CanvasLayer/Death UI/UI/VBoxContainer2"]
+margin_left = 139.0
+margin_top = 22.0
+margin_right = 160.0
+margin_bottom = 40.0
+size_flags_vertical = 1
+text = "100"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Death UI/UI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -81.0
+margin_top = -77.0
+margin_right = 81.0
+margin_bottom = -21.0
+
+[node name="RestartGameButton" type="Button" parent="CanvasLayer/Death UI/UI/VBoxContainer"]
+margin_right = 162.0
+margin_bottom = 26.0
+theme = ExtResource( 7 )
+text = "RESTART GAME"
+
+[node name="Quit ToMenuButton" type="Button" parent="CanvasLayer/Death UI/UI/VBoxContainer"]
 margin_top = 30.0
 margin_right = 162.0
 margin_bottom = 56.0
@@ -102,4 +233,7 @@ theme = ExtResource( 7 )
 text = "QUIT TO MENU"
 
 [connection signal="pressed" from="CanvasLayer/Pause Menu/Menu/VBoxContainer/ReturnToGameButton" to="CanvasLayer/Pause Menu" method="_on_ReturnToGameButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause Menu/Menu/VBoxContainer/RestartGameButton" to="CanvasLayer/Pause Menu" method="_on_RestartGameButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause Menu/Menu/VBoxContainer/Quit ToMenuButton" to="CanvasLayer/Pause Menu" method="_on_Quit_ToMenuButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Death UI/UI/VBoxContainer/RestartGameButton" to="CanvasLayer/Death UI" method="_on_RestartGameButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Death UI/UI/VBoxContainer/Quit ToMenuButton" to="CanvasLayer/Death UI" method="_on_Quit_ToMenuButton_pressed"]
