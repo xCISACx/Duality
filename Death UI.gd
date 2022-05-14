@@ -8,6 +8,7 @@ onready var player
 func _process(delta):
 	if !player:
 		if GameManager.player:
+			player = GameManager.player
 			GameManager.player.connect("player_dead", self, "show")
 	
 func show():

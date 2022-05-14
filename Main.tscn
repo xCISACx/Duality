@@ -109,10 +109,12 @@ theme = ExtResource( 7 )
 text = "QUIT TO MENU"
 
 [node name="Death UI" type="Control" parent="CanvasLayer"]
-pause_mode = 2
+pause_mode = 1
 process_priority = 15
 margin_right = 319.0
 margin_bottom = 184.0
+mouse_filter = 2
+input_pass_on_modal_close_click = false
 script = ExtResource( 10 )
 
 [node name="UI" type="Control" parent="CanvasLayer/Death UI"]

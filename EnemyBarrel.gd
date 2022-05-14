@@ -23,7 +23,7 @@ onready var sprite = $Sprite
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
-onready var hitbox = $HitBox2/CollisionShape2D
+onready var hitbox = $HitBox/CollisionShape2D
 onready var enemystat = $EnemyStat
 onready var flashAnimationPlayer = $FlashAnimationPlayer
 
