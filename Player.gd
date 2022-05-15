@@ -18,6 +18,7 @@ onready var flashAnimationPlayer = $FlashAnimationPlayer
 onready var hat = $InconspicousHat
 onready var hat_clip = load("res://hat.WAV")
 onready var deathUI = get_tree().root.get_node("/root/Main/CanvasLayer/Death UI/UI")
+onready var playerUI = get_tree().root.get_node("/root/Main/CanvasLayer/Player UI")
 
 var stats = PlayerStats
 
@@ -38,6 +39,9 @@ var knockback = Vector2.ZERO
 var guarding = false
 
 signal player_dead
+
+func _init():
+	GameManager.player = self
 
 func _physics_process(delta):
 	match state:
@@ -92,6 +96,7 @@ func _ready():
 	PlayerStats.connect("max_speed_changed", self, "set_max_speed")
 	PlayerStats.connect("no_health", self, "death_state")
 	PlayerStats.connect("moonwalk", self, "show_hat")
+	playerUI.connect("speed_changed", self, "hat_check")
 	var pause_menu = get_tree().root.get_node("/root/Main/CanvasLayer/Pause Menu")
 	pause_menu.connect("unpaused", self, "reset_guard")
 	collsword.disabled = true
@@ -168,7 +173,10 @@ func move():
 	velocity = move_and_slide(velocity)
 	
 func roll_state():
-	velocity = roll_vector * ROLL_SPEED
+	if PlayerStats.max_speed >= 0:
+		velocity = roll_vector * ROLL_SPEED
+	else:
+		velocity = roll_vector * -ROLL_SPEED
 	animation_state.travel("Roll")
 	move()
 	
@@ -248,6 +256,25 @@ func _on_StaminaTimer_timeout():
 
 func _on_StaminaTimeout_timeout():
 	stamina_timer.start()
+	
+func hat_check():
+	if PlayerStats.max_speed > -1:
+		hat.hide()
+		if !BackgroundMusic.get_node("AudioStreamPlayer").playing:
+			if !BackgroundMusic.get_node("AudioStreamPlayer").stream == load("res://bgm.wav"):
+					BackgroundMusic.get_node("AudioStreamPlayer").stream = load("res://bgm.wav")
+					BackgroundMusic.get_node("AudioStreamPlayer").play()
+		elif BackgroundMusic.get_node("AudioStreamPlayer").playing:
+			if BackgroundMusic.get_node("AudioStreamPlayer").stream == load("res://hat.WAV"):
+				BackgroundMusic.get_node("AudioStreamPlayer").stop()
+				BackgroundMusic.get_node("AudioStreamPlayer").stream = load("res://bgm.wav")
+				BackgroundMusic.get_node("AudioStreamPlayer").play()
+	elif PlayerStats.max_speed < 0:
+		hat.show()
+		if BackgroundMusic.get_node("AudioStreamPlayer").playing:
+			if !BackgroundMusic.get_node("AudioStreamPlayer").stream == load("res://hat.WAV"):
+				BackgroundMusic.get_node("AudioStreamPlayer").stream = load("res://hat.WAV")
+				BackgroundMusic.get_node("AudioStreamPlayer").play()
 	
 func show_hat():
 	hat.visible = true

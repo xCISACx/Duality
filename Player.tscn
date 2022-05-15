@@ -1232,7 +1232,7 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpBack"
-frame = 13
+frame = 15
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -1337,7 +1337,7 @@ bus = "SFX"
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpFront"
-frame = 13
+frame = 15
 playing = true
 
 [node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]

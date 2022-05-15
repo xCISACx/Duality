@@ -9,14 +9,19 @@ var max_stamina = 5 setget set_max_stamina
 var speed_icons = 5
 var max_speed = 5 setget set_max_speed
 
+var hat_icons = 0
+
 onready var heartUIFull = $HeartUIFull
 onready var heartUIEmpty = $HeartUIEmpty
 onready var staminaUIFull = $StaminaUIFull
 onready var staminaUIEmpty = $StaminaUIEmpty
 onready var speedUIFull = $SpeedUIFull
 onready var speedUIEmpty = $SpeedUIEmpty
+onready var hatUIFull = $HatUIFull
 onready var enemyAmountLabel = $EnemyAmountLabel
 onready var floorCountLabel = $FloorCountLabel
+
+signal speed_changed
 
 func set_hearts(value):
 	hearts = clamp(value, 0, max_hearts)
@@ -41,10 +46,15 @@ func set_max_stamina(value):
 		staminaUIEmpty.rect_size.x = max_stamina * 15
 		
 func set_max_speed(value):
-	max_speed = clamp(value, -1, max_speed)
-	max_speed = max(value, -1)
+	emit_signal("speed_changed")
+	max_speed = clamp(value, -99, max_speed)
+	max_speed = max(value, -99)
 	if speedUIFull:
 		speedUIFull.rect_size.x = max_speed * 15
+	if hatUIFull:
+		hatUIFull.rect_size.x = (0 - max_speed) * 15
+		print(String(hatUIFull.rect_size.x))
+		print(max_speed)
 		
 func set_enemy_amount(value):
 	enemyAmountLabel.text = String(value)
@@ -55,6 +65,7 @@ func _ready():
 	self.max_stamina = PlayerStats.max_stamina
 	self.stamina_icons = PlayerStats.stamina
 	self.max_speed = PlayerStats.max_speed
+	self.hat_icons = 0 - PlayerStats.max_speed
 	self.enemyAmountLabel.text = String(GameManager.enemies_alive)
 	self.floorCountLabel.text = String(GameManager.cleared_floors)
 	

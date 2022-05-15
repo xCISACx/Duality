@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Health UI.gd" type="Script" id=1]
 [ext_resource path="res://UI/Sprites/speed_empty.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://UI/Sprites/heart.png" type="Texture" id=7]
 [ext_resource path="res://enemy_icon.png" type="Texture" id=8]
 [ext_resource path="res://floor-icon.png" type="Texture" id=9]
+[ext_resource path="res://hat icon.png" type="Texture" id=10]
 
 [node name="Player UI" type="Control"]
 margin_right = 319.0
@@ -92,6 +93,16 @@ stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HatUIFull" type="TextureRect" parent="."]
+margin_left = 1.0
+margin_top = 22.0
+margin_right = 76.0
+margin_bottom = 37.0
+rect_scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 10 )
+expand = true
+stretch_mode = 2
 
 [node name="EnemyAmountLabel" type="Label" parent="."]
 margin_left = 294.0
