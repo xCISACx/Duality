@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=2]
+[gd_scene load_steps=90 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://player-new3.png" type="Texture" id=2]
@@ -9,7 +9,9 @@
 [ext_resource path="res://PowerUpSpriteFrames.tres" type="SpriteFrames" id=7]
 [ext_resource path="res://HurtBox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://FlashShader.gdshader" type="Shader" id=9]
+[ext_resource path="res://Pointer.gd" type="Script" id=10]
 [ext_resource path="res://shield.wav" type="AudioStream" id=11]
+[ext_resource path="res://arrow.png" type="Texture" id=12]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.0
@@ -1230,7 +1232,7 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpBack"
-frame = 10
+frame = 13
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -1335,7 +1337,7 @@ bus = "SFX"
 position = Vector2( 0.5, -2 )
 frames = ExtResource( 7 )
 animation = "PowerUpFront"
-frame = 10
+frame = 13
 playing = true
 
 [node name="PowerUpAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -1353,6 +1355,11 @@ position = Vector2( -1, -8 )
 texture = ExtResource( 3 )
 
 [node name="HatAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Pointer" type="Sprite" parent="."]
+position = Vector2( 0, -22 )
+texture = ExtResource( 12 )
+script = ExtResource( 10 )
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]

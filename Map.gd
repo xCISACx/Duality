@@ -70,3 +70,6 @@ func spawn_portal():
 	var portal_location = player_spawn_location
 	portalc.global_position = tile_map.map_to_world(portal_location)
 	portal_spawned = true
+	GameManager.portal_spawned = portal_spawned
+	GameManager.player.get_node("Pointer").show()
+	

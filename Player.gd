@@ -61,6 +61,7 @@ func _physics_process(delta):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("ready")
+	$Pointer.hide()
 	GameManager.player = self
 	animation_tree.set("parameters/Attack/blend_position", Vector2.DOWN)
 	animation_tree.set("parameters/Roll/blend_position", Vector2.DOWN)
