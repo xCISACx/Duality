@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Map.gd" type="Script" id=1]
 [ext_resource path="res://CliffTileset.tres" type="TileSet" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://enemy_icon.png" type="Texture" id=8]
 [ext_resource path="res://floor-icon.png" type="Texture" id=9]
 [ext_resource path="res://Death UI.gd" type="Script" id=10]
+[ext_resource path="res://joystick/virtual_joystick.tscn" type="PackedScene" id=11]
+[ext_resource path="res://joystick/textures/joystick_base_outline.png" type="Texture" id=12]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -233,6 +235,51 @@ margin_right = 162.0
 margin_bottom = 56.0
 theme = ExtResource( 7 )
 text = "QUIT TO MENU"
+
+[node name="MobileUI" type="Control" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Virtual joystick" parent="CanvasLayer/MobileUI" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0.509804 )
+margin_left = 21.0
+margin_top = 55.0
+margin_right = 273.0
+margin_bottom = 307.0
+rect_scale = Vector2( 0.25, 0.25 )
+pressed_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+deadzone_size = 5.0
+clampzone_size = 40.0
+
+[node name="TouchScreenButton2" type="TouchScreenButton" parent="CanvasLayer/MobileUI"]
+position = Vector2( 250, 85 )
+scale = Vector2( 0.135, 0.135 )
+normal = ExtResource( 12 )
+action = "pick_up"
+
+[node name="TouchScreenButton5" type="TouchScreenButton" parent="CanvasLayer/MobileUI"]
+position = Vector2( 250, 135 )
+scale = Vector2( 0.135, 0.135 )
+normal = ExtResource( 12 )
+action = "guard"
+
+[node name="TouchScreenButton6" type="TouchScreenButton" parent="CanvasLayer/MobileUI"]
+position = Vector2( 142, 151 )
+scale = Vector2( 0.135, 0.0799999 )
+normal = ExtResource( 12 )
+action = "pause"
+
+[node name="TouchScreenButton4" type="TouchScreenButton" parent="CanvasLayer/MobileUI"]
+position = Vector2( 275, 110 )
+scale = Vector2( 0.135, 0.135 )
+normal = ExtResource( 12 )
+action = "roll"
+
+[node name="TouchScreenButton3" type="TouchScreenButton" parent="CanvasLayer/MobileUI"]
+position = Vector2( 225, 110 )
+scale = Vector2( 0.135, 0.135 )
+normal = ExtResource( 12 )
+action = "attack"
 
 [connection signal="pressed" from="CanvasLayer/Pause Menu/Menu/VBoxContainer/ReturnToGameButton" to="CanvasLayer/Pause Menu" method="_on_ReturnToGameButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause Menu/Menu/VBoxContainer/RestartGameButton" to="CanvasLayer/Pause Menu" method="_on_RestartGameButton_pressed"]
